@@ -1,0 +1,22 @@
+
+.mVideo.data-v-7a56ebf8 {
+	width: 100%;
+}
+.movieNumOut.data-v-7a56ebf8 {
+
+	width: 1000rpx;
+	height: 500rpx;
+}
+.movieNum.data-v-7a56ebf8 {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	        flex-wrap: wrap;
+	width: 1000rpx;
+	height: 500rpx;
+}
+.movieNumBut.data-v-7a56ebf8 {
+	width: 200rpx;
+}
+

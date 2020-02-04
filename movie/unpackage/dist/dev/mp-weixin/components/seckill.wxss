@@ -1,0 +1,120 @@
+
+.outer.data-v-76299e50 {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	/* 指定了弹性容器中子元素的排列方式:纵向，横向，纵向反向，横纵向反向， */
+	width: 100%;
+	/* background-color: #ED1C24; */
+}
+.head.data-v-76299e50 {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+	/* background-color: #A5673F; */
+	padding: 10rpx;
+}
+.head-head.data-v-76299e50 {
+	width: 50%;
+	/* background-color: #DD524D; */
+}
+.head-content.data-v-76299e50 {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	/* background-color: yellow; */
+}
+.head-item1.data-v-76299e50 {
+	width: 20px;
+	height: 20px;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+}
+.head-item2.data-v-76299e50 {
+	width: 20px;
+	height: 20px;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+}
+.head-item3.data-v-76299e50 {
+	width: 20px;
+	height: 20px;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+}
+.head-item4.data-v-76299e50 {
+	width: 20px;
+	height: 20px;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+}
+.content.data-v-76299e50 {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+
+	padding: 10rpx;
+	/* background-color: #39B54A; */
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+}
+.content-head.data-v-76299e50 {
+
+	/* background-color: #EC008C; */
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+}
+.content-floor-list.data-v-76299e50 {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+	white-space: nowrap;/* 设置如何处理元素内的空白 */
+}
+.content-floor-wrapper.data-v-76299e50 {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	/* align-items: flex-start; */
+}
+.content-floor-item.data-v-76299e50 {
+	width: 150rpx;
+	margin-right: 20rpx;
+}
+.content-floor-img.data-v-76299e50 {
+
+	/* background-color: blue; */
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+
+	width: 150rpx;
+	height: 150rpx;
+	padding: 10rpx;
+	margin: 10rpx 30rpx 10rpx 10rpx;
+}
+.footer.data-v-76299e50 {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+	padding: 10rpx;
+	/* background-color: #FBBD08; */
+}
+.footer-head.data-v-76299e50 {
+	width: 50%;
+	/* background-color: #0000FF; */
+}
+

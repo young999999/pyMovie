@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "首页",
+  "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom",
+    "search": "/components/search",
+    "picture-swiper": "/components/pictureSwiper",
+    "seckill": "/components/seckill"
+  }
+}

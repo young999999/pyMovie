@@ -1,0 +1,52 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/movie/movie",
+			"style": {
+				"navigationBarTitleText": "电影"
+				// "navigationStyle": "custom" /* 取消默认导航，也可以配置全局style中（则全局取消） */
+			}
+		}, {
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTitleText": "我的"
+				// "navigationStyle": "custom" /* 取消默认导航，也可以配置全局style中（则全局取消） */
+			}
+		}
+		, {
+			"path": "pages/login/login"
+		}
+		, {
+			"path": "components/search"
+		}, {
+			"path": "components/pictureSwiper"
+		}, {
+			"path": "components/myvideo"
+		}
+	],
+	"tabBar": {
+		"color": "#C0C4CC",
+		"selectedColor": "#fa436a",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/movie/movie",
+			"iconPath": "static/tab-home.png",
+			"selectedIconPath": "static/tab-home-current.png",
+			"text": "电影 "
+		}, {
+			"pagePath": "pages/my/my",
+			"iconPath": "static/tab-my.png",
+			"selectedIconPath": "static/tab-my-current.png",
+			"text": "我的"
+		}]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"enablePullDownRefresh": true,
+		"navigationStyle": "custom"
+	}
+}

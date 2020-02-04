@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "电影",
+  "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom"
+  }
+}

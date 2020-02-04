@@ -1,0 +1,100 @@
+server:
+
+  port: 8087
+
+
+
+
+spring:
+  profiles:
+    active: druid, mybatisplus
+  application:
+    name: spider
+
+  datasource:
+    # 配置数据源
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 使用druid连接池
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://47.98.53.232:3306/movie?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    #    url: jdbc:mysql://192.168.1.68:3306/movie?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: 1234
+    druid:
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 初始化大小,最小,最大
+      initial-size: 5
+      max-active: 50
+      min-idle: 5
+      # 配置获取连接等待超时时间
+      max-wait: 60000
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: SELECT 'x'
+      validation-query-timeout: 60000
+      test-on-borrow: true
+      test-on-return: true
+      test-while-idle: true
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      log-abandoned: true
+      remove-abandoned: true
+      remove-abandoned-timeout: 1800
+      filters: stat,wall
+
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*'
+
+      # 管理后台的url和登录账号密码
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: true
+        login-username: admin
+        login-password: 123456
+
+      # 配置StatFilter
+      filter:
+        stat:
+          db-type: mysql
+          log-slow-sql: true
+          slow-sql-millis: 2000
+        # 配置WallFilter
+        wall:
+          db-type: mysql
+          enabled: true
+          config:
+            delete-allow: true
+            drop-table-allow: false
+            multi-statement-allow: true
+            delete-where-alway-true-check: true
+            delete-where-none-check: true
+      # 合并多个DruidDataSource的监控数据
+      use-global-data-source-stat: true
+
+  data:
+    elasticsearch:
+#      cluster-nodes: 47.98.53.232:9300 #5.6.8
+      cluster-nodes: 192.168.1.68:9300 #7.5.1
+      cluster-name: my-application  #高版本加，如7.5.1；低版本不加，如5.6.8
+
+
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: not_empty
+      table-underline: true
+      db-type: mysql
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  mapper-locations: classpath:/mapper/*.xml
+#  configuration:
+#    map-underscore-to-camel-case: true
+
