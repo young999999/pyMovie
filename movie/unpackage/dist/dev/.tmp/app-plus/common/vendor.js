@@ -33,9 +33,9 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(f
 
 /***/ }),
 /* 4 */
-/*!******************************************************!*\
-  !*** E:/实战项目/GitSpace/young/uniapp/movie/pages.json ***!
-  \******************************************************/
+/*!*************************************************!*\
+  !*** E:/实战项目/GitSpace/pyMovie/movie/pages.json ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -65,9 +65,9 @@ eval("module.exports = {\"_from\":\"@dcloudio/uni-stat@^2.0.0-alpha-244201911280
 
 /***/ }),
 /* 7 */
-/*!***********************************************************************!*\
-  !*** E:/实战项目/GitSpace/young/uniapp/movie/pages.json?{"type":"style"} ***!
-  \***********************************************************************/
+/*!******************************************************************!*\
+  !*** E:/实战项目/GitSpace/pyMovie/movie/pages.json?{"type":"style"} ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -76,9 +76,9 @@ eval("Object.defineProperty(exports, \"__esModule\", { value: true });exports.de
 
 /***/ }),
 /* 8 */
-/*!**********************************************************************!*\
-  !*** E:/实战项目/GitSpace/young/uniapp/movie/pages.json?{"type":"stat"} ***!
-  \**********************************************************************/
+/*!*****************************************************************!*\
+  !*** E:/实战项目/GitSpace/pyMovie/movie/pages.json?{"type":"stat"} ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

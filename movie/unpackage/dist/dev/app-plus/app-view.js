@@ -1082,7 +1082,7 @@ function gz$gwx_2(){
 if( __WXML_GLOBAL__.ops_cached.$gwx_2)return __WXML_GLOBAL__.ops_cached.$gwx_2
 __WXML_GLOBAL__.ops_cached.$gwx_2=[];
 (function(z){var a=11;function Z(ops){z.push(ops)}
-Z([3,'data-v-0a235d35'])
+Z([3,'data-v-dbbf2cd8'])
 Z([3,'bg-gradual-pink'])
 Z([3,'__l'])
 Z(z[0])
@@ -1095,22 +1095,22 @@ Z([a,[[7],[3,'movieName']]])
 Z(z[0])
 Z([3,'backText'])
 Z([3,'返回'])
-Z([3,'outter  data-v-0a235d35'])
-Z([3,'mVideo  data-v-0a235d35'])
+Z([3,'outter  data-v-dbbf2cd8'])
+Z([3,'mVideo  data-v-dbbf2cd8'])
 Z([[7],[3,'movieUrl']])
-Z([3,'movieNumOut  data-v-0a235d35'])
+Z([3,'movieNumOut  data-v-dbbf2cd8'])
 Z([3,'true'])
-Z([3,'movieNum data-v-0a235d35'])
+Z([3,'movieNum data-v-dbbf2cd8'])
 Z([3,'index'])
 Z([3,'item'])
 Z([[7],[3,'movieNumber']])
 Z(z[19])
 Z(z[0])
 Z([3,'__e'])
-Z([3,'movieNumBut text-xs data-v-0a235d35'])
+Z([3,'movieNumBut text-xs data-v-dbbf2cd8'])
 Z([[4],[[5],[[4],[[5],[[5],[1,'tap']],[[4],[[5],[[4],[[5],[[5],[1,'getUrl']],[[4],[[5],[[7],[3,'index']]]]]]]]]]]])
 Z([a,[[2,'+'],[[2,'+'],[1,'第'],[[2,'+'],[[7],[3,'index']],[1,1]]],[1,'集']]])
-Z([3,'text-red shadow data-v-0a235d35'])
+Z([3,'text-red shadow data-v-dbbf2cd8'])
 Z([3,'mini'])
 Z([3,'线路切换：'])
 Z(z[24])
@@ -1133,10 +1133,10 @@ function gz$gwx_3(){
 if( __WXML_GLOBAL__.ops_cached.$gwx_3)return __WXML_GLOBAL__.ops_cached.$gwx_3
 __WXML_GLOBAL__.ops_cached.$gwx_3=[];
 (function(z){var a=11;function Z(ops){z.push(ops)}
-Z([3,'data-v-f829d008'])
+Z([3,'data-v-7341bdca'])
 Z([1,true])
 Z(z[1])
-Z([3,'screen-swiper round-dot data-v-f829d008'])
+Z([3,'screen-swiper round-dot data-v-7341bdca'])
 Z([3,'500'])
 Z(z[1])
 Z([3,'2000'])
@@ -1155,10 +1155,10 @@ function gz$gwx_4(){
 if( __WXML_GLOBAL__.ops_cached.$gwx_4)return __WXML_GLOBAL__.ops_cached.$gwx_4
 __WXML_GLOBAL__.ops_cached.$gwx_4=[];
 (function(z){var a=11;function Z(ops){z.push(ops)}
-Z([3,'data-v-fc23ca9c'])
-Z([3,'cu-bar search bg-white data-v-fc23ca9c'])
-Z([3,'search-form round data-v-fc23ca9c'])
-Z([3,'cuIcon-search data-v-fc23ca9c'])
+Z([3,'data-v-3bfe8673'])
+Z([3,'cu-bar search bg-white data-v-3bfe8673'])
+Z([3,'search-form round data-v-3bfe8673'])
+Z([3,'cuIcon-search data-v-3bfe8673'])
 Z([1,false])
 Z([3,'__e'])
 Z(z[5])
@@ -1167,8 +1167,8 @@ Z([3,'search'])
 Z([[4],[[5],[[5],[[4],[[5],[[5],[1,'focus']],[[4],[[5],[[4],[[5],[[5],[1,'InputFocus']],[[4],[[5],[1,'$event']]]]]]]]]],[[4],[[5],[[5],[1,'blur']],[[4],[[5],[[4],[[5],[[5],[1,'InputBlur']],[[4],[[5],[1,'$event']]]]]]]]]]])
 Z([3,'搜索图片、文章、视频'])
 Z([3,'text'])
-Z([3,'action data-v-fc23ca9c'])
-Z([3,'cu-btn bg-green shadow-blur round data-v-fc23ca9c'])
+Z([3,'action data-v-3bfe8673'])
+Z([3,'cu-btn bg-green shadow-blur round data-v-3bfe8673'])
 Z([3,'搜索'])
 })(__WXML_GLOBAL__.ops_cached.$gwx_4);return __WXML_GLOBAL__.ops_cached.$gwx_4
 }
@@ -1176,7 +1176,7 @@ function gz$gwx_5(){
 if( __WXML_GLOBAL__.ops_cached.$gwx_5)return __WXML_GLOBAL__.ops_cached.$gwx_5
 __WXML_GLOBAL__.ops_cached.$gwx_5=[];
 (function(z){var a=11;function Z(ops){z.push(ops)}
-Z([3,'data-v-25401fe9'])
+Z([3,'data-v-415ee8ac'])
 Z([3,'bg-gradual-pink'])
 Z([3,'__l'])
 Z(z[0])
@@ -1199,7 +1199,7 @@ function gz$gwx_6(){
 if( __WXML_GLOBAL__.ops_cached.$gwx_6)return __WXML_GLOBAL__.ops_cached.$gwx_6
 __WXML_GLOBAL__.ops_cached.$gwx_6=[];
 (function(z){var a=11;function Z(ops){z.push(ops)}
-Z([3,'data-v-2bfc9192'])
+Z([3,'data-v-b7dbba10'])
 Z([3,'bg-gradual-pink'])
 Z([3,'__l'])
 Z(z[0])
@@ -1212,9 +1212,9 @@ Z([3,'电影'])
 Z(z[0])
 Z([3,'backText'])
 Z([3,'返回'])
-Z([3,'cu-bar search bg-white data-v-2bfc9192'])
-Z([3,'search-form round data-v-2bfc9192'])
-Z([3,'cuIcon-search data-v-2bfc9192'])
+Z([3,'cu-bar search bg-white data-v-b7dbba10'])
+Z([3,'search-form round data-v-b7dbba10'])
+Z([3,'cuIcon-search data-v-b7dbba10'])
 Z(z[4])
 Z([3,'__e'])
 Z(z[0])
@@ -1223,35 +1223,35 @@ Z([[4],[[5],[[4],[[5],[[5],[1,'input']],[[4],[[5],[[4],[[5],[[5],[1,'__set_model
 Z([3,'请输入电影或电视剧名称'])
 Z([3,'text'])
 Z([[7],[3,'InputBottom']])
-Z([3,'action data-v-2bfc9192'])
+Z([3,'action data-v-b7dbba10'])
 Z(z[17])
-Z([3,'cu-btn bg-green shadow-blur round data-v-2bfc9192'])
+Z([3,'cu-btn bg-green shadow-blur round data-v-b7dbba10'])
 Z([[4],[[5],[[4],[[5],[[5],[1,'tap']],[[4],[[5],[[4],[[5],[[5],[1,'searchVideo']],[[4],[[5],[1,'$event']]]]]]]]]]])
 Z([3,'搜索'])
 Z(z[23])
-Z([3,'text-pink data-v-2bfc9192'])
+Z([3,'text-pink data-v-b7dbba10'])
 Z([a,[[2,'+'],[[2,'+'],[1,'搜索“'],[[7],[3,'InputBottom']]],[1,'”相关影视']]])
 Z([[7],[3,'judge']])
-Z([3,'text-red text-xl data-v-2bfc9192'])
+Z([3,'text-red text-xl data-v-b7dbba10'])
 Z([a,[[2,'+'],[[2,'+'],[1,'未找到“'],[[7],[3,'InputBottom']]],[1,'”相关影视']]])
 Z([3,'index'])
 Z([3,'item'])
 Z([[7],[3,'data']])
 Z(z[35])
-Z([3,'outter bg-white data-v-2bfc9192'])
+Z([3,'outter bg-white data-v-b7dbba10'])
 Z([[7],[3,'item']])
 Z(z[17])
-Z([3,'movieLeft data-v-2bfc9192'])
+Z([3,'movieLeft data-v-b7dbba10'])
 Z([[4],[[5],[[4],[[5],[[5],[1,'tap']],[[4],[[5],[[4],[[5],[[5],[[5],[1,'gotoVideo']],[[4],[[5],[1,'$0']]]],[[4],[[5],[[4],[[5],[[4],[[5],[[5],[[5],[1,'data']],[1,'']],[[7],[3,'index']]]]]]]]]]]]]]]])
 Z([[6],[[7],[3,'item']],[3,'poster']])
-Z([3,'movieRight  data-v-2bfc9192'])
+Z([3,'movieRight  data-v-b7dbba10'])
 Z(z[17])
-Z([3,'movieBtn text-blue  text-xl data-v-2bfc9192'])
+Z([3,'movieBtn text-blue  text-xl data-v-b7dbba10'])
 Z(z[43])
 Z([a,[[2,'+'],[[2,'+'],[1,''],[[6],[[7],[3,'item']],[3,'movieName']]],[1,'']]])
-Z([3,'movieInfor  data-v-2bfc9192'])
+Z([3,'movieInfor  data-v-b7dbba10'])
 Z([3,'主演：'])
-Z([3,'_br data-v-2bfc9192'])
+Z([3,'_br data-v-b7dbba10'])
 Z([a,[[2,'+'],[[2,'+'],[1,''],[[6],[[7],[3,'item']],[3,'actor']]],[1,'：']]])
 Z(z[52])
 })(__WXML_GLOBAL__.ops_cached.$gwx_6);return __WXML_GLOBAL__.ops_cached.$gwx_6
@@ -1750,7 +1750,7 @@ __wxAppCode__['app.wxml']=$gwx('./app.wxml');
 __wxAppCode__['colorui/components/cu-custom.wxss']=undefined;    
 __wxAppCode__['colorui/components/cu-custom.wxml']=$gwx('./colorui/components/cu-custom.wxml');
 
-__wxAppCode__['components/myvideo.wxss']=setCssToHead([".",[1],"outter.",[1],"data-v-0a235d35 { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -webkit-flex-direction: row; flex-direction: row; margin-top: ",[0,10],"; margin-bottom: ",[0,10],"; width: 100%; height: ",[0,500],"; }\n.",[1],"mVideo.",[1],"data-v-0a235d35 { -webkit-box-flex: 7; -webkit-flex: 7; flex: 7; margin-left: ",[0,10],"; margin-right: ",[0,10],"; height: ",[0,500],"; }\n.",[1],"movieNumOut.",[1],"data-v-0a235d35 { -webkit-box-flex: 2; -webkit-flex: 2; flex: 2; height: ",[0,500],"; }\n.",[1],"movieNum.",[1],"data-v-0a235d35 { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-flex-wrap: wrap; flex-wrap: wrap; }\n.",[1],"movieNumBut.",[1],"data-v-0a235d35 { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; width: ",[0,140],"; margin-left: ",[0,10],"; margin-bottom: ",[0,5],"; border: 1px solid black; }\n",],undefined,{path:"./components/myvideo.wxss"});    
+__wxAppCode__['components/myvideo.wxss']=setCssToHead([".",[1],"outter.",[1],"data-v-dbbf2cd8 { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -webkit-flex-direction: row; flex-direction: row; margin-top: ",[0,10],"; margin-bottom: ",[0,10],"; width: 100%; height: ",[0,500],"; }\n.",[1],"mVideo.",[1],"data-v-dbbf2cd8 { -webkit-box-flex: 7; -webkit-flex: 7; flex: 7; margin-left: ",[0,10],"; margin-right: ",[0,10],"; height: ",[0,500],"; }\n.",[1],"movieNumOut.",[1],"data-v-dbbf2cd8 { -webkit-box-flex: 2; -webkit-flex: 2; flex: 2; height: ",[0,500],"; }\n.",[1],"movieNum.",[1],"data-v-dbbf2cd8 { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-flex-wrap: wrap; flex-wrap: wrap; }\n.",[1],"movieNumBut.",[1],"data-v-dbbf2cd8 { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; width: ",[0,140],"; margin-left: ",[0,10],"; margin-bottom: ",[0,5],"; border: 1px solid black; }\n",],undefined,{path:"./components/myvideo.wxss"});    
 __wxAppCode__['components/myvideo.wxml']=$gwx('./components/myvideo.wxml');
 
 __wxAppCode__['components/pictureSwiper.wxss']=undefined;    
@@ -1762,7 +1762,7 @@ __wxAppCode__['components/search.wxml']=$gwx('./components/search.wxml');
 __wxAppCode__['pages/login/login.wxss']=undefined;    
 __wxAppCode__['pages/login/login.wxml']=$gwx('./pages/login/login.wxml');
 
-__wxAppCode__['pages/movie/movie.wxss']=setCssToHead([".",[1],"outter.",[1],"data-v-2bfc9192 { display: -webkit-box; display: -webkit-flex; display: flex; margin: ",[0,10],"; padding: ",[0,20],"; width: 100%; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -webkit-flex-direction: row; flex-direction: row; }\n.",[1],"movieLeft.",[1],"data-v-2bfc9192 { -webkit-box-flex: 3; -webkit-flex: 3; flex: 3; margin-right: ",[0,10],"; height: ",[0,300],"; }\n.",[1],"movieRight.",[1],"data-v-2bfc9192 { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-box-flex: 5; -webkit-flex: 5; flex: 5; -webkit-box-orient: vertical; -webkit-box-direction: normal; -webkit-flex-direction: column; flex-direction: column; }\n.",[1],"movieBtn.",[1],"data-v-2bfc9192 { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; height: ",[0,100],"; }\n.",[1],"movieInfor.",[1],"data-v-2bfc9192 { -webkit-box-flex: 3; -webkit-flex: 3; flex: 3; }\n",],undefined,{path:"./pages/movie/movie.wxss"});    
+__wxAppCode__['pages/movie/movie.wxss']=setCssToHead([".",[1],"outter.",[1],"data-v-b7dbba10 { display: -webkit-box; display: -webkit-flex; display: flex; margin: ",[0,10],"; padding: ",[0,20],"; width: 100%; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -webkit-flex-direction: row; flex-direction: row; }\n.",[1],"movieLeft.",[1],"data-v-b7dbba10 { -webkit-box-flex: 3; -webkit-flex: 3; flex: 3; margin-right: ",[0,10],"; height: ",[0,300],"; }\n.",[1],"movieRight.",[1],"data-v-b7dbba10 { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-box-flex: 5; -webkit-flex: 5; flex: 5; -webkit-box-orient: vertical; -webkit-box-direction: normal; -webkit-flex-direction: column; flex-direction: column; }\n.",[1],"movieBtn.",[1],"data-v-b7dbba10 { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; height: ",[0,100],"; }\n.",[1],"movieInfor.",[1],"data-v-b7dbba10 { -webkit-box-flex: 3; -webkit-flex: 3; flex: 3; }\n",],undefined,{path:"./pages/movie/movie.wxss"});    
 __wxAppCode__['pages/movie/movie.wxml']=$gwx('./pages/movie/movie.wxml');
 
 __wxAppCode__['pages/my/my.wxss']=undefined;    
