@@ -24,6 +24,8 @@
 		<video src="https://youku.cdn4-okzy.com/20200129/4115_b07fbecb/index.m3u8" controls></video>
 		<view>ok:mp4</view>
 		<video src="http://down.okdown6.com/20200129/4115_b07fbecb/爱情公寓5_26.mp4" controls></video>
+		<view>209:m3u8</view>
+		<video src="https://tv.youkutv.cc/2020/01/31/at27u4eSsXm2PehC/playlist.m3u8" controls></video>
 	</view>
 
 </template>

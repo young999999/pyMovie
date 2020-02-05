@@ -2,7 +2,7 @@ package com.spider.service.impl;
 
 import com.spider.entity.Movie;
 import com.spider.entity.Page;
-import com.spider.service.IProcessService;
+import com.spider.service.ProcessService;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
 import org.htmlcleaner.XPatherException;
@@ -15,7 +15,7 @@ import java.util.List;
  * @create 2020-01-18 18:42
  * 解析电影页面
  */
-public class KuYunMovieListProcessServiceImpl implements IProcessService {
+public class KuYunMovieListProcessServiceImpl implements ProcessService {
 
     @Override
     public List processMovieList(Page page) {

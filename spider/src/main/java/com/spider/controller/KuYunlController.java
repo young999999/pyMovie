@@ -4,9 +4,9 @@ import com.spider.entity.Movie;
 import com.spider.entity.Page;
 import com.spider.mapper.MovieESDao;
 import com.spider.mapper.MovieMapper;
-import com.spider.service.IDownLoadService;
-import com.spider.service.IProcessService;
-import com.spider.service.impl.HttpClientDownloadService;
+import com.spider.util.PageGetUtil;
+import com.spider.service.ProcessService;
+import com.spider.util.impl.CommonPageGet;
 import com.spider.service.impl.KuYunMovieListProcessServiceImpl;
 import com.spider.service.impl.OkMovieListProcessServiceImpl;
 import lombok.Data;
@@ -26,17 +26,17 @@ import java.util.List;
  */
 @Data
 @RestController
-public class KuYunMp4UrlController {
+public class KuYunlController {
 
     @Autowired
     MovieMapper movieMapper;
     @Autowired
     MovieESDao movieESDao;
 
-    private IDownLoadService downLoadService;
-    private IProcessService processService;
-    private IProcessService judgmentMovieListPageService;
-    private IProcessService processMovie;
+    private PageGetUtil downLoadService;
+    private ProcessService processService;
+    private ProcessService judgmentMovieListPageService;
+    private ProcessService processMovie;
     private String baseurl = "http://www.okzyw.com";
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String nowTime = "";
@@ -45,8 +45,8 @@ public class KuYunMp4UrlController {
     //从第一页到最后一页爬取
     @GetMapping("url/{pageIndex}")
     public void saveMovie(@PathVariable(value = "pageIndex") int pageIndex) {
-        KuYunMp4UrlController dsj = new KuYunMp4UrlController();
-        dsj.setDownLoadService(new HttpClientDownloadService());
+        KuYunlController dsj = new KuYunlController();
+        dsj.setDownLoadService(new CommonPageGet());
 
         dsj.setProcessService(new OkMovieListProcessServiceImpl());
         dsj.setJudgmentMovieListPageService(new OkMovieListProcessServiceImpl());
@@ -200,13 +200,13 @@ public class KuYunMp4UrlController {
 
 
     public static void main(String[] args) {
-        HttpClientDownloadService httpClientDownloadService = new HttpClientDownloadService();
+        CommonPageGet commonPageGet = new CommonPageGet();
 
         /*酷云资源测试*/
         String url = "http://www.kuyunzy1.com/list/?0-785.html";
         KuYunMovieListProcessServiceImpl movieListProcessService = new KuYunMovieListProcessServiceImpl();
 
-        Page page = httpClientDownloadService.download(url);
+        Page page = commonPageGet.download(url);
         List list = movieListProcessService.processMovieList(page);
         for (Object o : list) {
             System.err.println(o);

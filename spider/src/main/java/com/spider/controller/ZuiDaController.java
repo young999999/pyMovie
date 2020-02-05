@@ -4,11 +4,10 @@ import com.spider.entity.Movie;
 import com.spider.entity.Page;
 import com.spider.mapper.MovieESDao;
 import com.spider.mapper.MovieMapper;
-import com.spider.service.IDownLoadService;
-import com.spider.service.IProcessService;
-import com.spider.service.impl.HttpClientDownloadService;
+import com.spider.util.PageGetUtil;
+import com.spider.service.ProcessService;
+import com.spider.util.impl.CommonPageGet;
 import com.spider.service.impl.KuYunMovieListProcessServiceImpl;
-import com.spider.service.impl.OkMovieListProcessServiceImpl;
 import com.spider.service.impl.zdMovieListProcessServiceImpl;
 import lombok.Data;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,19 +26,19 @@ import java.util.List;
  */
 @Data
 @RestController
-public class StartDSJcount {
+public class ZuiDaController {
 
     @Autowired
     MovieMapper movieMapper;
     @Autowired
     MovieESDao movieESDao;
 
-    private IDownLoadService downLoadService;
-    private IProcessService processService;
+    private PageGetUtil downLoadService;
+    private ProcessService processService;
     private zdMovieListProcessServiceImpl judgmentMovieListPageService =new zdMovieListProcessServiceImpl();
     private zdMovieListProcessServiceImpl judgmentPageDownSuccess = new zdMovieListProcessServiceImpl();
-    private IProcessService processMovie;
-    private String baseurl = "http://www.zuidazy5.com";
+    private ProcessService processMovie;
+    private String baseurl = "http://www.zuidazy1.com";
 //    private String baseurl = "http://www.kuyunzy1.com";
     //    private String baseurl = "http://www.okzyw.com";
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -49,9 +47,9 @@ public class StartDSJcount {
     //从第一页到pageIndex页更新
     @GetMapping("update/{startIndex}/{endIndex}")
     public String updateMovie(@PathVariable(value = "startIndex") int startIndex, @PathVariable(value = "endIndex") int endIndex) {
-        StartDSJcount dsj = new StartDSJcount();
+        ZuiDaController dsj = new ZuiDaController();
 
-        dsj.setDownLoadService(new HttpClientDownloadService());
+        dsj.setDownLoadService(new CommonPageGet());
         dsj.setProcessService(new zdMovieListProcessServiceImpl());
         dsj.setProcessMovie(new zdMovieListProcessServiceImpl());
 
@@ -219,9 +217,9 @@ public class StartDSJcount {
     //从第一页到最后一页爬取
     @GetMapping("climb/{pageIndex}")
     public void saveMovie(@PathVariable(value = "pageIndex") int pageIndex) {
-        StartDSJcount dsj = new StartDSJcount();
+        ZuiDaController dsj = new ZuiDaController();
 
-        dsj.setDownLoadService(new HttpClientDownloadService());
+        dsj.setDownLoadService(new CommonPageGet());
         dsj.setProcessService(new zdMovieListProcessServiceImpl());
         dsj.setProcessMovie(new zdMovieListProcessServiceImpl());
 
@@ -406,7 +404,7 @@ public class StartDSJcount {
     /*删除所有文档*/
     @GetMapping("del")
     public void delAll() {
-        StartDSJcount dsj = new StartDSJcount();
+        ZuiDaController dsj = new ZuiDaController();
         System.err.println(dsj.searchTotle(movieESDao));
         movieESDao.deleteAll();
     }
@@ -441,13 +439,13 @@ public class StartDSJcount {
 
 
     public static void main(String[] args) {
-        HttpClientDownloadService httpClientDownloadService = new HttpClientDownloadService();
+        CommonPageGet commonPageGet = new CommonPageGet();
 
         /*酷云资源测试*/
         String url = "http://www.kuyunzy1.com/list/?0-785.html";
         KuYunMovieListProcessServiceImpl movieListProcessService = new KuYunMovieListProcessServiceImpl();
 
-        Page page = httpClientDownloadService.download(url);
+        Page page = commonPageGet.download(url);
         List list = movieListProcessService.processMovieList(page);
         for (Object o : list) {
             System.err.println(o);

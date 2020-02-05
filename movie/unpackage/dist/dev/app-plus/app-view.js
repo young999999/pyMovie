@@ -1289,6 +1289,8 @@ Z([3,'ok:m3u8'])
 Z([3,'https://youku.cdn4-okzy.com/20200129/4115_b07fbecb/index.m3u8'])
 Z([3,'ok:mp4'])
 Z([3,'http://down.okdown6.com/20200129/4115_b07fbecb/爱情公寓5_26.mp4'])
+Z([3,'209:m3u8'])
+Z([3,'https://tv.youkutv.cc/2020/01/31/at27u4eSsXm2PehC/playlist.m3u8'])
 })(__WXML_GLOBAL__.ops_cached.$gwx_7);return __WXML_GLOBAL__.ops_cached.$gwx_7
 }
 __WXML_GLOBAL__.ops_set.$gwx=z;
@@ -1612,6 +1614,12 @@ _(fWD,cXD)
 _(o8C,fWD)
 var hYD=_mz(z,'video',['controls',-1,'src',28],[],e,s,gg)
 _(o8C,hYD)
+var oZD=_n('view')
+var c1D=_oz(z,29,e,s,gg)
+_(oZD,c1D)
+_(o8C,oZD)
+var o2D=_mz(z,'video',['controls',-1,'src',30],[],e,s,gg)
+_(o8C,o2D)
 _(r,o8C)
 return r
 }

@@ -1,11 +1,11 @@
-package com.spider.util;
+package com.spider.util.download;
 
 import com.spider.entity.Movie;
 import com.spider.entity.Page;
-import com.spider.service.impl.HttpClientDownloadService;
 import com.spider.service.impl.KuYunMovieListProcessServiceImpl;
 import com.spider.service.impl.OkMovieListProcessServiceImpl;
 import com.spider.service.impl.zdMovieListProcessServiceImpl;
+import com.spider.util.impl.CommonPageGet;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -18,7 +18,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 /**
  * @author young
@@ -39,10 +38,10 @@ public class PageDownUtil {
         request.addHeader("Accept-Language","zh-CN,zh;q=0.9");
         request.addHeader("Cache-Control","max-age=0");
         request.addHeader("Connection","keep-alive");
-//        request.addHeader("Cookie","PHPSESSID=qv76mb46cmj9q1gbdvvsr8kes7; UM_distinctid=1700ef2eb40b0-0a5b85da50849b-3a614f0b-100200-1700ef2eb41a5; CNZZDATA1261462053=244164477-1580794588-%7C1580794588; mac_history=%7Bvideo%3A%5B%7B%22name%22%3A%22%u574F%u7231%u60C5%22%2C%22link%22%3A%22/%3Fm%3Dvod-detail-id-73720.html%22%2C%22typename%22%3A%22%u97E9%u56FD%u5267%22%2C%22typelink%22%3A%22/%3Fm%3Dvod-type-id--pg-1.html%22%2C%22pic%22%3A%22upload/vod/2019-12-02/201912021575262163.jpg%22%7D%5D%7D");
-//        request.addHeader("Host","www.zuidazy2.com");
-//        request.addHeader("Referer","http://www.zuidazy2.com/");
         request.addHeader("Upgrade-Insecure-Requests","1");
+//        request.addHeader("Cookie","ASPSESSIONIDQASSQADC=COJJCHGAFLDBAFODPBPFNKDJ; __51cke__=; ASPSESSIONIDSASRSADD=KHPJHCGALNNIOOOIAMDEIEFF; ASPSESSIONIDSATRSACC=JKFKMNFAMOMNAEENGNJKKPKI; ASPSESSIONIDSATQTBDD=FHMBNEGAPHODPNKIEKPLCJHM; ASPSESSIONIDSASTRADC=EJDCCAGANJIEMIBDIHGMPIGE; ASPSESSIONIDSCTSQADC=IJIDIJGAGPODDEKNJGGCKLHG; ASPSESSIONIDQCSSRBCC=LPJLNLGAKHKIDPHLEKGMFJCG; ASPSESSIONIDQASSRBDC=ELDKBEKAHINCPBODOIMCEJOE; ASPSESSIONIDSCQTQACD=JGFJHNKANOPGBPDIDHNABPDI; ASPSESSIONIDQCRRTBDD=HHOKMIKAJKNNAAEABELICPDL; ASPSESSIONIDQAQRSBCD=EPLDNPKAOBAAPLIMPEGGNONK; ASPSESSIONIDQCSTSDAD=BJHKDAMAAGFFJNOAIOOHFIMN; ASPSESSIONIDQATRSACC=KFAOILLALINMNNCJHIHFBONM; ASPSESSIONIDSARRTBCD=ODNBJCMANDHPPBHKKIPIFFMO; ASPSESSIONIDQARRTACC=NGMMJJMAKLDMINNEOIAJFMNK; ASPSESSIONIDQCSSQBCD=AKKLEJBBHEIHBAMHHFBGHHJH; __tins__19534235=%7B%22sid%22%3A%201580873323093%2C%20%22vd%22%3A%201%2C%20%22expires%22%3A%201580875123093%7D; __51laig__=38");
+//        request.addHeader("Host","wwww.kuyunzy1.com");
+//        request.addHeader("Referer","http://www.kuyunzy1.com/");
         String content = null;
         try {
             CloseableHttpResponse response = client.execute(request);
@@ -68,7 +67,7 @@ public class PageDownUtil {
     public static void main(String[] args) throws UnsupportedEncodingException {
 
 
-        HttpClientDownloadService httpClientDownloadService = new HttpClientDownloadService();
+        CommonPageGet commonPageGet = new CommonPageGet();
 
         /*酷云资源测试*/
 
@@ -84,7 +83,7 @@ public class PageDownUtil {
            int i = 0;
            while (true) {
                i++;
-               page = httpClientDownloadService.download(url);
+               page = commonPageGet.download(url);
                if (movieListProcessService.judgmentPageDownSuccess(page)) {
                    System.err.println("成功" + i);
                    break;
@@ -109,14 +108,14 @@ public class PageDownUtil {
 
 //        while (true)
         {
-            HttpClientDownloadService httpClientDownloadService = new HttpClientDownloadService();
+            CommonPageGet commonPageGet = new CommonPageGet();
             //        /*OK资源测试*/
         String url = "http://www.okzyw.com/?m=vod-detail-id-47626.html";
 
 
             OkMovieListProcessServiceImpl movieListProcessService = new OkMovieListProcessServiceImpl();
 
-            Page page = httpClientDownloadService.download(url);
+            Page page = commonPageGet.download(url);
             System.err.println(page.getContent());
             Movie movie = movieListProcessService.processMovie(page);
             System.err.println(movie);
@@ -127,7 +126,7 @@ public class PageDownUtil {
 
 //        while (true)
         {
-            HttpClientDownloadService httpClientDownloadService = new HttpClientDownloadService();
+            CommonPageGet commonPageGet = new CommonPageGet();
             //        /*zd资源测试*/
 
 //            String url = "http://www.zuidazy2.com/?m=vod-detail-id-73720.html";
@@ -137,7 +136,7 @@ public class PageDownUtil {
 
             zdMovieListProcessServiceImpl movieListProcessService=new zdMovieListProcessServiceImpl();
 
-            Page page = httpClientDownloadService.download(url);
+            Page page = commonPageGet.download(url);
 //            System.err.println(page.getContent());
 
             System.err.println(movieListProcessService.zdJudgmentMovieListPage(page));
