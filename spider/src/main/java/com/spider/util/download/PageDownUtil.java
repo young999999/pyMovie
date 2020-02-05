@@ -4,7 +4,7 @@ import com.spider.entity.Movie;
 import com.spider.entity.Page;
 import com.spider.service.impl.KuYunMovieListProcessServiceImpl;
 import com.spider.service.impl.OkMovieListProcessServiceImpl;
-import com.spider.service.impl.zdMovieListProcessServiceImpl;
+import com.spider.service.impl.ZdMovieListProcessServiceImpl;
 import com.spider.util.impl.CommonPageGet;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
@@ -134,7 +134,7 @@ public class PageDownUtil {
             String url = "http://www.zuidazy2.com/?m=vod-index-pg-1000.html";
 //            String url = "http://www.zuidazy2.com";
 
-            zdMovieListProcessServiceImpl movieListProcessService=new zdMovieListProcessServiceImpl();
+            ZdMovieListProcessServiceImpl movieListProcessService=new ZdMovieListProcessServiceImpl();
 
             Page page = commonPageGet.download(url);
 //            System.err.println(page.getContent());

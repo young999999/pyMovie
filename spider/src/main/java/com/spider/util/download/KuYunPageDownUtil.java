@@ -128,7 +128,7 @@ public class KuYunPageDownUtil {
             String url = "http://www.zuidazy2.com/?m=vod-index-pg-1000.html";
 //            String url = "http://www.zuidazy2.com";
 
-            zdMovieListProcessServiceImpl movieListProcessService=new zdMovieListProcessServiceImpl();
+            ZdMovieListProcessServiceImpl movieListProcessService=new ZdMovieListProcessServiceImpl();
 
             Page page = commonPageGet.download(url);
 //            System.err.println(page.getContent());

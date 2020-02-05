@@ -6,6 +6,7 @@ import com.spider.service.ProcessService;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
 import org.htmlcleaner.XPatherException;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * @create 2020-01-18 18:42
  * 解析电影页面
  */
+@Service
 public class KuYunMovieListProcessServiceImpl implements ProcessService {
 
     @Override

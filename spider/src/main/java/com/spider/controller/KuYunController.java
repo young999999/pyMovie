@@ -9,8 +9,11 @@ import com.spider.service.ProcessService;
 import com.spider.util.impl.CommonPageGet;
 import com.spider.service.impl.KuYunMovieListProcessServiceImpl;
 import com.spider.service.impl.OkMovieListProcessServiceImpl;
+import com.spider.util.impl.KuYunPageGet;
 import lombok.Data;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +29,7 @@ import java.util.List;
  */
 @Data
 @RestController
-public class KuYunlController {
+public class KuYunController {
 
     @Autowired
     MovieMapper movieMapper;
@@ -45,7 +48,7 @@ public class KuYunlController {
     //从第一页到最后一页爬取
     @GetMapping("url/{pageIndex}")
     public void saveMovie(@PathVariable(value = "pageIndex") int pageIndex) {
-        KuYunlController dsj = new KuYunlController();
+        KuYunController dsj = new KuYunController();
         dsj.setDownLoadService(new CommonPageGet());
 
         dsj.setProcessService(new OkMovieListProcessServiceImpl());
@@ -200,16 +203,23 @@ public class KuYunlController {
 
 
     public static void main(String[] args) {
-        CommonPageGet commonPageGet = new CommonPageGet();
 
-        /*酷云资源测试*/
-        String url = "http://www.kuyunzy1.com/list/?0-785.html";
-        KuYunMovieListProcessServiceImpl movieListProcessService = new KuYunMovieListProcessServiceImpl();
 
-        Page page = commonPageGet.download(url);
-        List list = movieListProcessService.processMovieList(page);
-        for (Object o : list) {
-            System.err.println(o);
-        }
+
+        Logger logger = LoggerFactory.getLogger(KuYunController.class);
+        logger.error("错误");
+//        KuYunPageGet kuYunPageGet = new KuYunPageGet();
+//
+//        /*酷云资源测试*/
+//        String url = "http://www.kuyunzy1.com/list/?0-785.html";
+//        KuYunMovieListProcessServiceImpl movieListProcessService = new KuYunMovieListProcessServiceImpl();
+//
+//        Page page = kuYunPageGet.download(url);
+//        System.err.println(page.getContent());
+//
+//        List list = movieListProcessService.processMovieList(page);
+//        for (Object o : list) {
+//            System.err.println(o);
+//        }
     }
 }
