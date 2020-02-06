@@ -121,32 +121,7 @@ public class PageDownUtil {
             System.err.println(movie);
         }
 
-    }    @Test
-    public void zdTest() {
-
-//        while (true)
-        {
-            CommonPageGet commonPageGet = new CommonPageGet();
-            //        /*zd资源测试*/
-
-//            String url = "http://www.zuidazy2.com/?m=vod-detail-id-73720.html";
-//            String url = "http://www.baidu.com";
-            String url = "http://www.zuidazy2.com/?m=vod-index-pg-1000.html";
-//            String url = "http://www.zuidazy2.com";
-
-            ZdMovieListProcessServiceImpl movieListProcessService=new ZdMovieListProcessServiceImpl();
-
-            Page page = commonPageGet.download(url);
-//            System.err.println(page.getContent());
-
-            System.err.println(movieListProcessService.zdJudgmentMovieListPage(page));
-//            List list = movieListProcessService.processMovieList(page);
-//            for (Object o : list) {
-//                System.err.println(o);
-//            }
-//            Movie movie = movieListProcessService.processMovie(page);
-//            System.err.println(movie);
-        }
-
     }
+
+
 }

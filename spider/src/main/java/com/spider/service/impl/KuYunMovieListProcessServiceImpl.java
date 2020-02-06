@@ -1,6 +1,7 @@
 package com.spider.service.impl;
 
 import com.spider.entity.Movie;
+import com.spider.entity.MovieCollection;
 import com.spider.entity.Page;
 import com.spider.service.ProcessService;
 import org.htmlcleaner.HtmlCleaner;
@@ -67,8 +68,9 @@ public class KuYunMovieListProcessServiceImpl implements ProcessService {
     @Override
     public Movie processMovie(Page page) {
         Movie movie = new Movie();
+        MovieCollection mc=new MovieCollection();
         movie.setPoster("");
-        List list = new ArrayList();//存放某电影集合
+
         String movieCollection = new String();//存放某电影集合
 
         String content = page.getContent();//得到下载的页面
@@ -86,8 +88,8 @@ public class KuYunMovieListProcessServiceImpl implements ProcessService {
             if (evaluateXPathMovieName.length > 0 && evaluateXPathMovieName != null) {
                 TagNode node = (TagNode) evaluateXPathMovieName[0];
 
-                String name="";
-                name=node.getText().toString();
+                String name = "";
+                name = node.getText().toString();
 
                 movie.setMovieName(name);
             }
@@ -100,7 +102,6 @@ public class KuYunMovieListProcessServiceImpl implements ProcessService {
             }
 
 
-
             //电影类别
             Object[] evaluateXPathMovieCategory = rootNoade.evaluateXPath("/body/table[2]/tbody/tr[1]/td[2]/table/tbody/tr[5]/td/font");
             if (evaluateXPathMovieCategory.length > 0 && evaluateXPathMovieCategory != null) {
@@ -110,22 +111,16 @@ public class KuYunMovieListProcessServiceImpl implements ProcessService {
 
 
 
-            //电影更新状态/body/table[2]/tbody/tr[1]/td[2]/table/tbody/tr[8]/td/font
-//            Object[] evaluateXPathMovieState = rootNoade.evaluateXPath("/body/table[2]/tbody/tr[1]/td[2]/table/tbody/tr[8]/td/font");
-//            if (evaluateXPathMovieState.length > 0 && evaluateXPathMovieState != null) {
-//                TagNode node = (TagNode) evaluateXPathMovieState[0];
-//                movie.setMovieState(node.getText().toString());
-//            }
 
 
             //电影每集的链接和集数
-            Object[] evaluateXPathMovieCollection = rootNoade.evaluateXPath("/body/table[2]/tbody/tr[4]/td/table/tbody");
-            if (evaluateXPathMovieCollection.length > 0 && evaluateXPathMovieCollection != null) {
+            Object[] evaluateXPathMovieCollectionm3u8 = rootNoade.evaluateXPath("/body/table[2]/tbody/tr[3]/td/table/tbody");
+            if (evaluateXPathMovieCollectionm3u8.length > 0 && evaluateXPathMovieCollectionm3u8 != null) {
                 /*node => tbody*/
-                TagNode node = (TagNode) evaluateXPathMovieCollection[0];
+                TagNode node = (TagNode) evaluateXPathMovieCollectionm3u8[0];
 
                 /*node.getChildTagList().get(i) => tr*/
-                for (int i = 0; i < node.getChildTagList().size()-1; i++) {
+                for (int i = 0; i < node.getChildTagList().size() - 1; i++) {
 
                     /*tagNode => td*/
                     TagNode tagNode = node.getChildTagList().get(i);
@@ -139,9 +134,34 @@ public class KuYunMovieListProcessServiceImpl implements ProcessService {
                         movieCollection = movieCollection.concat("EP" + (i + 1) + "：" + "$" + value + ",");
                     }
                 }
-                movie.setMovieCollectionMp4(movieCollection);
+                mc.setKycollectionm3u8(movieCollection);
             }
-        } catch (XPatherException  e) {
+            movieCollection="";
+            //电影每集的链接和集数
+            Object[] evaluateXPathMovieCollection = rootNoade.evaluateXPath("/body/table[2]/tbody/tr[4]/td/table/tbody");
+            if (evaluateXPathMovieCollection.length > 0 && evaluateXPathMovieCollection != null) {
+                /*node => tbody*/
+                TagNode node = (TagNode) evaluateXPathMovieCollection[0];
+
+                /*node.getChildTagList().get(i) => tr*/
+                for (int i = 0; i < node.getChildTagList().size() - 1; i++) {
+
+                    /*tagNode => td*/
+                    TagNode tagNode = node.getChildTagList().get(i);
+
+                    /*tagNode.getChildTagList().get(0) => input*/
+                    TagNode tagNode1 = tagNode.getChildTagList().get(0);
+                    String value = tagNode1.getChildTagList().get(0).getAttributeByName("value");
+                    if (i == node.getChildTagList().size() - 2) {
+                        movieCollection = movieCollection.concat("EP" + (i + 1) + "：" + "$" + value);
+                    } else {
+                        movieCollection = movieCollection.concat("EP" + (i + 1) + "：" + "$" + value + ",");
+                    }
+                }
+                mc.setKycollectionmp4(movieCollection);
+            }
+            movie.setMc(mc);
+        } catch (XPatherException e) {
             e.printStackTrace();
         }
         return movie;
@@ -149,34 +169,40 @@ public class KuYunMovieListProcessServiceImpl implements ProcessService {
 
 
     @Override
-    public Integer judgmentMovieListPage(Page page) {
-
-
+    public Boolean processTotlePage(Page page,int pageIndex) {
         String content = page.getContent();//得到下载的页面
-
         HtmlCleaner htmlCleaner = new HtmlCleaner();
         TagNode rootNoade = htmlCleaner.clean(content);
         try {
             Object[] evaluateXPath = rootNoade.evaluateXPath("/body/table[3]/tbody/tr/td/span");
-
             if (evaluateXPath.length > 0) {
                 TagNode node = (TagNode) evaluateXPath[0];
-                String text = node.getText()+"";
-                String[] s = text.split(" ")[0].split("/");
+
+                String s=node.getText().toString();
+                s=s.split(" ")[0].split("/")[1];
 
 
-                return Integer.parseInt(s[1]);
 
+                Integer totleMPage=Integer.parseInt(s);
+//
+//                if (totleMovieNum-totleMovieNum/50*50>0){
+//                    totleMPage=totleMovieNum/50+1;
+//                }else {
+//                    totleMPage=totleMovieNum/50;
+//                }
+                if (pageIndex<=totleMPage) {
+                    return true;
+                }
             }
-
         } catch (XPatherException e) {
             e.printStackTrace();
         }
-        return 0;
+        return false;
     }
 
 
-    public boolean judgmentPageDownSuccess(Page page) {
+    @Override
+    public Boolean judgmentPageDownSuccess(Page page) {
 
 
         String content = page.getContent();//得到下载的页面

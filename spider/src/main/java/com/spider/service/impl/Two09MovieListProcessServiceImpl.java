@@ -18,7 +18,7 @@ import java.util.List;
  * 解析电影页面
  */
 @Service
-public class OkMovieListProcessServiceImpl implements ProcessService {
+public class Two09MovieListProcessServiceImpl implements ProcessService {
 
     @Override
     public List processMovieList(Page page) {
@@ -81,18 +81,20 @@ public class OkMovieListProcessServiceImpl implements ProcessService {
     @Override
     public Movie processMovie(Page page) {
         Movie movie = new Movie();
-        MovieCollection mc = new MovieCollection();
+        List list = new ArrayList();//存放某电影集合
 
         String movieCollection = "";//存放某电影集合
 
-        String content = page.getContent();//得到下载的页面
+        MovieCollection mc = new MovieCollection();
 
+        String content = page.getContent();//得到下载的页面
+//        System.err.println(content);
 
         HtmlCleaner htmlCleaner = new HtmlCleaner();
         TagNode rootNoade = htmlCleaner.clean(content);
         try {
-            //电影每集的链接和集数m3u8
-            Object[] evaluateXPathMovieCollection = rootNoade.evaluateXPath("//*[@id=\"1\"]/ul");
+            //电影每集的链接和集数(m3u8)
+            Object[] evaluateXPathMovieCollection = rootNoade.evaluateXPath("/body/div[5]/div[4]/div/div/ul[2]");
             if (evaluateXPathMovieCollection.length > 0 && evaluateXPathMovieCollection != null) {
                 TagNode node = (TagNode) evaluateXPathMovieCollection[0];
 
@@ -103,19 +105,17 @@ public class OkMovieListProcessServiceImpl implements ProcessService {
                     /*tagNode.getChildTagList().get(0) => input*/
                     String value = tagNode.getChildTagList().get(0).getAttributeByName("value");
                     if (i == node.getChildTagList().size() - 1) {
-                        movieCollection = movieCollection.concat("第" + (i + 1) + "集" + "$" + value);
+                        movieCollection = movieCollection.concat("EP" + (i + 1) + "$" + value);
                     } else {
-                        movieCollection = movieCollection.concat("第" + (i + 1) + "集" + "$" + value + ",");
+                        movieCollection = movieCollection.concat("EP" + (i + 1) + "$" + value + ",");
                     }
                 }
-                mc.setOkcollectionm3u8(movieCollection);
 
-
+                mc.setTwo09collectionm3u8(movieCollection);
             }
-
             movieCollection = "";
-            //电影每集的链接和集数Mp4
-            Object[] evaluateXPathMovieCollectionMp4 = rootNoade.evaluateXPath("//*[@id=\"down_1\"]/ul");
+            //电影每集的链接和集数(mp4)//*[@id="down_1"]/ul
+            Object[] evaluateXPathMovieCollectionMp4 = rootNoade.evaluateXPath("/body/div[5]/div[4]/div/div/ul[2]");
             if (evaluateXPathMovieCollectionMp4.length > 0 && evaluateXPathMovieCollectionMp4 != null) {
                 TagNode node = (TagNode) evaluateXPathMovieCollectionMp4[0];
 
@@ -126,22 +126,22 @@ public class OkMovieListProcessServiceImpl implements ProcessService {
                     /*tagNode.getChildTagList().get(0) => input*/
                     String value = tagNode.getChildTagList().get(0).getAttributeByName("value");
                     if (i == node.getChildTagList().size() - 1) {
-                        movieCollection = movieCollection.concat("第" + (i + 1) + "集" + "$" + value);
+                        movieCollection = movieCollection.concat("EP" + (i + 1) + "$" + value);
                     } else {
-                        movieCollection = movieCollection.concat("第" + (i + 1) + "集" + "$" + value + ",");
+                        movieCollection = movieCollection.concat("EP" + (i + 1) + "$" + value + ",");
                     }
                 }
-                mc.setOkcollectionmp4(movieCollection);
+
+                mc.setTwo09collectionmp4(movieCollection);
             }
             movie.setMc(mc);
-
 
             //电影名称
             Object[] evaluateXPathMovieName = rootNoade.evaluateXPath("/body/div[5]/div[1]/div/div/div[2]/div[1]/h2");
 
             if (evaluateXPathMovieName.length > 0 && evaluateXPathMovieName != null) {
                 TagNode node = (TagNode) evaluateXPathMovieName[0];
-                movie.setMovieName(node.getText().toString());
+                movie.setMovieName(node.getText().toString().trim());
             }
             //电影海报/html/body/div[5]/div[1]/div/div/div[1]/img
             Object[] evaluateXPathPoster = rootNoade.evaluateXPath("/body/div[5]/div[1]/div/div/div[1]/img");
@@ -152,7 +152,14 @@ public class OkMovieListProcessServiceImpl implements ProcessService {
             }
 
 
-            //电影类别
+            //演员
+            Object[] evaluateXPathActor = rootNoade.evaluateXPath("/body/div[5]/div[1]/div/div/div[2]/div[2]/ul/li[3]/span");
+            if (evaluateXPathMovieName.length > 0 && evaluateXPathActor != null) {
+                TagNode node = (TagNode) evaluateXPathActor[0];
+                movie.setActor(node.getText().toString());
+            }
+
+            //电影类别/html/body/div[5]/div[1]/div/div/div[2]/div[2]/ul/li[4]/span
             Object[] evaluateXPathMovieCategory = rootNoade.evaluateXPath("/body/div[5]/div[1]/div/div/div[2]/div[2]/ul/li[4]/span");
 
             if (evaluateXPathMovieCategory.length > 0 && evaluateXPathMovieCategory != null) {
@@ -168,41 +175,42 @@ public class OkMovieListProcessServiceImpl implements ProcessService {
 
     @Override
     public Boolean processTotlePage(Page page, int pageIndex) {
+
+
         String content = page.getContent();//得到下载的页面
+
         HtmlCleaner htmlCleaner = new HtmlCleaner();
         TagNode rootNoade = htmlCleaner.clean(content);
         try {
-            Object[] evaluateXPath = rootNoade.evaluateXPath("/body/div[1]/ul/li[3]/div/ul[2]/li/strong");
-            if (evaluateXPath.length > 0) {
-                TagNode node = (TagNode) evaluateXPath[0];
-                Integer totleMovieNum = Integer.parseInt(node.getText().toString());
-                Integer totleMPage = 0;
+            Object[] evaluateXPath = rootNoade.evaluateXPath("/body/div[5]/ul[2]/li/span[2]/a");
 
-                if (totleMovieNum - totleMovieNum / 50 * 50 > 0) {
-                    totleMPage = totleMovieNum / 50 + 1;
-                } else {
-                    totleMPage = totleMovieNum / 50;
-                }
-                if (pageIndex <= totleMPage) {
-                    return true;
-                }
+            if (evaluateXPath.length > 0) {
+
+                return true;
             }
+
         } catch (XPatherException e) {
             e.printStackTrace();
         }
         return false;
+
     }
 
     @Override
     public Boolean judgmentPageDownSuccess(Page page) {
+
+
         String content = page.getContent();//得到下载的页面
 
         HtmlCleaner htmlCleaner = new HtmlCleaner();
         TagNode rootNoade = htmlCleaner.clean(content);
         try {
-            Object[] evaluateXPath = rootNoade.evaluateXPath("/body/div[1]/ul/li[1]/img");
+            Object[] evaluateXPath = rootNoade.evaluateXPath("/body/div[2]/ul/li[1]/img");
+
             if (evaluateXPath.length > 0) {
+
                 return true;
+
             }
 
         } catch (XPatherException e) {

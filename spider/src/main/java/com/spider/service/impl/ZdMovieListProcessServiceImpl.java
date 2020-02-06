@@ -1,6 +1,7 @@
 package com.spider.service.impl;
 
 import com.spider.entity.Movie;
+import com.spider.entity.MovieCollection;
 import com.spider.entity.Page;
 import com.spider.service.ProcessService;
 import org.htmlcleaner.HtmlCleaner;
@@ -84,6 +85,8 @@ public class ZdMovieListProcessServiceImpl implements ProcessService {
 
         String movieCollection = "";//存放某电影集合
 
+        MovieCollection mc = new MovieCollection();
+
         String content = page.getContent();//得到下载的页面
 //        System.err.println(content);
 
@@ -108,9 +111,9 @@ public class ZdMovieListProcessServiceImpl implements ProcessService {
                     }
                 }
 
-                movie.setMovieCollection(movieCollection);
+                mc.setZdcollectionm3u8(movieCollection);
             }
-            movieCollection="";
+            movieCollection = "";
             //电影每集的链接和集数(mp4)//*[@id="down_1"]/ul
             Object[] evaluateXPathMovieCollectionMp4 = rootNoade.evaluateXPath("//*[@id=\"down_1\"]/ul");
             if (evaluateXPathMovieCollectionMp4.length > 0 && evaluateXPathMovieCollectionMp4 != null) {
@@ -129,8 +132,9 @@ public class ZdMovieListProcessServiceImpl implements ProcessService {
                     }
                 }
 
-                movie.setMovieCollectionMp4(movieCollection);
+                mc.setZdcollectionmp4(movieCollection);
             }
+            movie.setMc(mc);
 
             //电影名称
             Object[] evaluateXPathMovieName = rootNoade.evaluateXPath("/body/div[5]/div[1]/div/div/div[2]/div[1]/h2");
@@ -170,12 +174,7 @@ public class ZdMovieListProcessServiceImpl implements ProcessService {
     }
 
     @Override
-    public Integer judgmentMovieListPage(Page page) {
-        return 0;
-    }
-
-
-    public boolean zdJudgmentMovieListPage(Page page) {
+    public Boolean processTotlePage(Page page, int pageIndex) {
 
 
         String content = page.getContent();//得到下载的页面
@@ -183,7 +182,7 @@ public class ZdMovieListProcessServiceImpl implements ProcessService {
         HtmlCleaner htmlCleaner = new HtmlCleaner();
         TagNode rootNoade = htmlCleaner.clean(content);
         try {
-            Object[] evaluateXPath = rootNoade.evaluateXPath("body/div[5]/ul[2]/li/span[2]/a");
+            Object[] evaluateXPath = rootNoade.evaluateXPath("/body/div[5]/ul[2]/li/span[2]/a");
 
             if (evaluateXPath.length > 0) {
 
@@ -197,7 +196,8 @@ public class ZdMovieListProcessServiceImpl implements ProcessService {
 
     }
 
-    public boolean zdJudgmentPageDownSuccess(Page page) {
+    @Override
+    public Boolean judgmentPageDownSuccess(Page page) {
 
 
         String content = page.getContent();//得到下载的页面

@@ -4,7 +4,9 @@ import com.spider.entity.Movie;
 import com.spider.entity.Page;
 import com.spider.mapper.MovieESDao;
 import com.spider.mapper.MovieMapper;
+import com.spider.service.ProcessService;
 import com.spider.service.impl.ZdMovieListProcessServiceImpl;
+import com.spider.util.PageGetUtil;
 import com.spider.util.impl.CommonPageGet;
 import com.spider.util.log.LogUtil;
 import io.swagger.annotations.Api;
@@ -30,7 +32,7 @@ import java.util.List;
  */
 @Data
 @RestController
-@Api(tags = "最大资源",description = "有关www.zuidazy1.com网站的爬取")
+@Api(tags = "最大资源", description = "有关www.zuidazy1.com网站的爬取")
 @CrossOrigin
 public class ZuiDaController {
 
@@ -46,12 +48,10 @@ public class ZuiDaController {
     ZdMovieListProcessServiceImpl zd;
 
 
-
-
     String baseurl = "http://www.zuidazy1.com";
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    String nowTime = "";
+
 
     //从第一页到pageIndex页更新
     @ApiOperation(value = "最大资源更新", notes = "更新最大资源，startIndex起始页，endIndex终止页（不包括）")
@@ -79,22 +79,27 @@ public class ZuiDaController {
                 downPageNum++;
                 movieListPage = commonPageGet.download(url);
 
-                if (zd.zdJudgmentMovieListPage(movieListPage)) {
+                if (zd.judgmentPageDownSuccess(movieListPage)) {
                     if (downPageNum > 1) {
 //                        System.out.println("更新：下载电影集合页面成功 " + downPageNum + "--------------------------------");
-                        LogUtil.fileWriter(file,"更新：下载电影集合页面成功 " + downPageNum + "--------------------------------");
+                        LogUtil.fileWriter(file, "更新：下载电影集合页面成功 " + downPageNum + "--------------------------------");
                     }
                     downPageNum = 0;
                     break;
                 }
                 if (downPageNum == 1) {
 //                    System.err.println("更新：下载电影集合页面失败 " + downPageNum + " " + url);
-                    LogUtil.fileWriter(file,"更新：下载电影集合页面失败 " + downPageNum + " " + url);
+                    LogUtil.fileWriter(file, "更新：下载电影集合页面失败 " + downPageNum + " " + url);
 
                 }
             }
 
+            /*增加一个方法判断body/div[5]/ul[2]/li/span[2]/a这个xpath路径(每页第一步电影名称)是否存在，存在继续解析，不存在则跳出循环*/
+            if (zd.processTotlePage(movieListPage,startIndex)) {
+                System.err.println(sdf.format(System.currentTimeMillis()) + ":爬取：第" + startIndex + "页没有有电影");
 
+                break;
+            }
             List<String> movieList = zd.processMovieList(movieListPage);
 
             for (String movieUrl : movieList) {
@@ -104,10 +109,10 @@ public class ZuiDaController {
                 while (true) {
                     downPageNum++;
                     moviePage = commonPageGet.download(movieUrl);
-                    if (zd.zdJudgmentPageDownSuccess(moviePage)) {
+                    if (zd.judgmentPageDownSuccess(moviePage)) {
                         if (downPageNum > 1) {
 //                            System.out.println("更新：下载电影信息页面成功 " + downPageNum + "-----------------------------------------");
-                            LogUtil.fileWriter(file,"更新：下载电影信息页面成功 " + downPageNum + "-----------------------------------------");
+                            LogUtil.fileWriter(file, "更新：下载电影信息页面成功 " + downPageNum + "-----------------------------------------");
 
                         }
                         downPageNum = 0;
@@ -115,7 +120,7 @@ public class ZuiDaController {
                     }
                     if (downPageNum == 1) {
 //                        System.err.println("更新：下载电影信息页面失败 " + downPageNum + " " + movieUrl);
-                        LogUtil.fileWriter(file,"更新：下载电影信息页面失败 " + downPageNum + " " + movieUrl);
+                        LogUtil.fileWriter(file, "更新：下载电影信息页面失败 " + downPageNum + " " + movieUrl);
 
                     }
                 }
@@ -141,7 +146,7 @@ public class ZuiDaController {
 
                     if ("".equals(movie.getMovieName()) && movieCrawlingFlag == 0) {
 //                        System.err.println(sdf.format(System.currentTimeMillis()) + ":更新：未爬取到该电影信息：" + movieUrl);
-                        LogUtil.fileWriter(file,sdf.format(System.currentTimeMillis()) + ":更新：未爬取到该电影信息：" + movieUrl);
+                        LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":更新：未爬取到该电影信息：" + movieUrl);
 
                         movieCrawlingFlag = 1;
                     }
@@ -150,22 +155,22 @@ public class ZuiDaController {
                     }
                     if (!"".equals(movie.getMovieName()) && movieCrawlingFlag == 1) {
 //                        System.err.println(sdf.format(System.currentTimeMillis()) + ":更新：爬取(多次)到该电影信息：" + movie);
-                        LogUtil.fileWriter(file,sdf.format(System.currentTimeMillis()) + ":更新：爬取(多次)到该电影信息：" + movie);
+                        LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":更新：爬取(多次)到该电影信息：" + movie);
 
                     }
 
                 }
                 if (timeDifference > 20000) {
 //                    System.err.println("更新：爬取该电影信息超时" + movieUrl);
-                    LogUtil.fileWriter(file,"更新：爬取该电影信息超时" + movieUrl);
+                    LogUtil.fileWriter(file, "更新：爬取该电影信息超时" + movieUrl);
 
 
                     continue;
                 }
 
                 int length1 = 0;
-                if (movie.getMovieCollection() != null) {
-                    length1 = movie.getMovieCollection().split(",").length;
+                if (movie.getMc().getZdcollectionm3u8() != null) {
+                    length1 = movie.getMc().getZdcollectionm3u8().split(",").length;
                 }
 
 
@@ -195,49 +200,52 @@ public class ZuiDaController {
 
                 /*ES中不存在该电影，直接向MySql和Elasticsearch中添加该电影*/
                 if ("".equals(byMovieNameLike.getMovieName()) &&
-                        "".equals(byMovieNameLike.getMovieCollection())) {
+                        "".equals(byMovieNameLike.getMc().getZdcollectionm3u8())) {
 
                     movieTotle++;
                     movie.setId(movieTotle);
                     movie.setMovieId(movieTotle);
 
+
                     movieESDao.save(movie);
 
 //                    System.err.println(sdf.format(System.currentTimeMillis()) + ":更新：添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
-                    LogUtil.fileWriter(file,sdf.format(System.currentTimeMillis()) + ":更新：添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
+                    LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":更新：添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
 
                 }
                 /*ES中存在该电影*/
                 else {
 
-                    length = byMovieNameLike.getMovieCollection().split(",").length;
+                    length = byMovieNameLike.getMc().getZdcollectionm3u8().split(",").length;
+//                    length = byMovieNameLike.getMovieCollection().split(",").length;
 
                     /*该电影是否与ES中存在的该电影剧集长度不相同*/
                     if (length1 != length) {
 
                         movie.setId(byMovieNameLike.getMovieId());
                         movie.setMovieId(byMovieNameLike.getMovieId());
+
                         movieESDao.save(movie);
 
 
 //                        System.err.println(sdf.format(System.currentTimeMillis()) + ":更新：更新电影（剧集改变）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
-                        LogUtil.fileWriter(file,sdf.format(System.currentTimeMillis()) + ":更新：更新电影（剧集改变）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
+                        LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":更新：更新电影（剧集改变）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
 
                     } else {
 //                        System.out.println(sdf.format(System.currentTimeMillis()) + ":更新：该电影存在id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
-                        LogUtil.fileWriter(file,sdf.format(System.currentTimeMillis()) + ":更新：该电影存在id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
+                        LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":更新：该电影存在id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
 
                     }
                 }
 
             }
 //            System.out.println(sdf.format(System.currentTimeMillis()) + ":更新：第" + startIndex + "页完成");
-            LogUtil.fileWriter(file,sdf.format(System.currentTimeMillis()) + ":更新：第" + startIndex + "页完成");
+            LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":更新：第" + startIndex + "页完成");
 
             startIndex++;
         }
 //        System.err.println(sdf.format(System.currentTimeMillis()) + ":更新：退出更新");
-        LogUtil.fileWriter(file,sdf.format(System.currentTimeMillis()) + ":更新：退出更新");
+        LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":更新：退出更新");
         return sdf.format(System.currentTimeMillis()) + ":退出更新";
     }
 
@@ -266,11 +274,11 @@ public class ZuiDaController {
                 downPageNum++;
                 movieListPage = commonPageGet.download(url);
 
-                if (zd.zdJudgmentPageDownSuccess(movieListPage)) {
+                if (zd.judgmentPageDownSuccess(movieListPage)) {
                     if (downPageNum > 1) {
                         if (downPageNum > 2) {
 //                            System.out.println("爬取：下载电影集合页面成功 " + downPageNum + "--------------------------------");
-                            LogUtil.fileWriter(file,"爬取：下载电影集合页面成功 " + downPageNum + "--------------------------------");
+                            LogUtil.fileWriter(file, "爬取：下载电影集合页面成功 " + downPageNum + "--------------------------------");
                         }
                     }
                     downPageNum = 0;
@@ -278,12 +286,12 @@ public class ZuiDaController {
                 }
                 if (downPageNum == 1) {
 //                    System.err.println("爬取：下载电影集合页面失败 " + downPageNum + " " + url);
-                    LogUtil.fileWriter(file,"爬取：下载电影集合页面失败 " + downPageNum + " " + url);
+                    LogUtil.fileWriter(file, "爬取：下载电影集合页面失败 " + downPageNum + " " + url);
 
                 }
             }
             /*增加一个方法判断body/div[5]/ul[2]/li/span[2]/a这个xpath路径(每页第一步电影名称)是否存在，存在继续解析，不存在则跳出循环*/
-            if (!zd.zdJudgmentMovieListPage(movieListPage)) {
+            if (zd.processTotlePage(movieListPage,index)) {
                 System.err.println(sdf.format(System.currentTimeMillis()) + ":爬取：第" + index + "页没有有电影");
 
                 break;
@@ -298,17 +306,17 @@ public class ZuiDaController {
                 while (true) {
                     downPageNum++;
                     moviePage = commonPageGet.download(movieUrl);
-                    if (zd.zdJudgmentPageDownSuccess(moviePage)) {
+                    if (zd.judgmentPageDownSuccess(moviePage)) {
                         if (downPageNum > 2) {
 //                            System.out.println("爬取：下载电影信息页面成功 " + downPageNum + "-----------------------------------------");
-                            LogUtil.fileWriter(file,"爬取：下载电影信息页面成功 " + downPageNum + "-----------------------------------------");
+                            LogUtil.fileWriter(file, "爬取：下载电影信息页面成功 " + downPageNum + "-----------------------------------------");
                         }
                         downPageNum = 0;
                         break;
                     }
                     if (downPageNum == 1) {
 //                        System.err.println("爬取：下载电影信息页面失败 " + downPageNum + " " + movieUrl);
-                        LogUtil.fileWriter(file,"爬取：下载电影信息页面失败 " + downPageNum + " " + movieUrl);
+                        LogUtil.fileWriter(file, "爬取：下载电影信息页面失败 " + downPageNum + " " + movieUrl);
                     }
                 }
 
@@ -336,7 +344,7 @@ public class ZuiDaController {
 
                     if ("".equals(movie.getMovieName()) && movieCrawlingFlag == 0) {
 //                        System.err.println(sdf.format(System.currentTimeMillis()) + ":爬取：未爬取到该电影信息：" + movieUrl);
-                        LogUtil.fileWriter(file,sdf.format(System.currentTimeMillis()) + ":爬取：未爬取到该电影信息：" + movieUrl);
+                        LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":爬取：未爬取到该电影信息：" + movieUrl);
                         movieCrawlingFlag = 1;
                     }
                     if ("".equals(movie.getMovieName()) && movieCrawlingFlag == 1) {
@@ -344,22 +352,22 @@ public class ZuiDaController {
                     }
                     if (!"".equals(movie.getMovieName()) && movieCrawlingFlag == 1) {
 //                        System.err.println(sdf.format(System.currentTimeMillis()) + ":爬取：爬取(多次)到该电影信息：" + movie);
-                        LogUtil.fileWriter(file,sdf.format(System.currentTimeMillis()) + ":爬取：爬取(多次)到该电影信息：" + movie);
+                        LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":爬取：爬取(多次)到该电影信息：" + movie);
 
                     }
 
                 }
                 if (timeDifference > 20000) {
 //                    System.err.println("更新：爬取该电影信息超时" + movieUrl);
-                    LogUtil.fileWriter(file,"更新：爬取该电影信息超时" + movieUrl);
+                    LogUtil.fileWriter(file, "更新：爬取该电影信息超时" + movieUrl);
 
                     continue;
                 }
 
 
                 int length1 = 0;
-                if (movie.getMovieCollection() != null) {
-                    length1 = movie.getMovieCollection().split(",").length;
+                if (movie.getMc().getZdcollectionm3u8() != null) {
+                    length1 = movie.getMc().getZdcollectionm3u8().split(",").length;
                 }
 
 
@@ -388,7 +396,7 @@ public class ZuiDaController {
 
                 /*ES中不存在该电影，直接向MySql和Elasticsearch中添加该电影*/
                 if ("".equals(byMovieNameLike.getMovieName()) &&
-                        "".equals(byMovieNameLike.getMovieCollection())) {
+                        "".equals(byMovieNameLike.getMc().getZdcollectionm3u8())) {
 
                     movieTotle++;
                     movie.setId(movieTotle);
@@ -397,12 +405,12 @@ public class ZuiDaController {
                     movieESDao.save(movie);
 
 //                    System.err.println(sdf.format(System.currentTimeMillis()) + ":爬取：添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
-                    LogUtil.fileWriter(file,sdf.format(System.currentTimeMillis()) + ":爬取：添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
+                    LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":爬取：添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
                 }
                 /*ES中存在该电影*/
                 else {
 
-                    length = byMovieNameLike.getMovieCollection().split(",").length;
+                    length = byMovieNameLike.getMc().getZdcollectionm3u8().split(",").length;
 
                     /*该电影是否与ES中存在的该电影剧集长度不相同*/
                     if (length1 != length) {
@@ -411,23 +419,23 @@ public class ZuiDaController {
                         movie.setMovieId(byMovieNameLike.getMovieId());
                         movieESDao.save(movie);
 //                        System.err.println(sdf.format(System.currentTimeMillis()) + ":爬取：更新电影（剧集改变）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
-                        LogUtil.fileWriter(file,sdf.format(System.currentTimeMillis()) + ":爬取：更新电影（剧集改变）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
+                        LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":爬取：更新电影（剧集改变）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
 
                     } else {
 //                        System.out.println(sdf.format(System.currentTimeMillis()) + ":爬取：该电影存在id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
-                        LogUtil.fileWriter(file,sdf.format(System.currentTimeMillis()) + ":爬取：该电影存在id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
+                        LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":爬取：该电影存在id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
 
                     }
                 }
 
             }
 //            System.out.println(sdf.format(System.currentTimeMillis()) + ":爬取：第" + index + "页完成");
-            LogUtil.fileWriter(file,sdf.format(System.currentTimeMillis()) + ":爬取：第" + index + "页完成");
+            LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":爬取：第" + index + "页完成");
 
             index++;
         }
 //        System.err.println(sdf.format(System.currentTimeMillis()) + ":爬取：退出爬取 " + "爬取到：" + index);
-        LogUtil.fileWriter(file,sdf.format(System.currentTimeMillis()) + ":爬取：退出爬取 " + "爬取到：" + index);
+        LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":爬取：退出爬取 " + "爬取到：" + (index - 1) + "页");
 
 
     }
@@ -450,24 +458,28 @@ public class ZuiDaController {
     }
 
 
-
-
-
     public static void main(String[] args) throws IOException {
-        int i=0;
-        File file = LogUtil.creatFile("./log.txt");
-        LogUtil.fileWriter(file,"更新：下载电影集合页面成功 " + i + "--------------------------------");
 
-//        LogUtil.FileWriter(LogUtil.creatFile("./log.txt"),"log");
-//        CommonPageGet commonPageGet = new CommonPageGet();
-//
-//        /*酷云资源测试*/
-//        String url = "http://www.kuyunzy1.com/list/?0-785.html";
-//        KuYunMovieListProcessServiceImpl movieListProcessService = new KuYunMovieListProcessServiceImpl();
-//
-//        Page page = commonPageGet.download(url);
-//        System.err.println(page.getContent());
 
+
+        PageGetUtil commonPageGet = new CommonPageGet();
+
+        /*酷云资源测试*/
+//        String url = "http://www.zuidazy2.com/?m=vod-detail-id-78664.html";
+        String url = "http://www.zuidazy3.com/?m=vod-index-pg-888.html";
+
+
+        ProcessService movieListProcessService = new ZdMovieListProcessServiceImpl();
+
+        Page page = commonPageGet.download(url);
+
+        System.err.println(movieListProcessService.judgmentPageDownSuccess(page));
+
+//        System.err.println(movieListProcessService.processTotlePage(page,0));
+//        System.err.println(movieListProcessService.processMovie(page));
+//
+////        System.err.println(page.getContent());
+////
 //        List list = movieListProcessService.processMovieList(page);
 //        for (Object o : list) {
 //            System.err.println(o);

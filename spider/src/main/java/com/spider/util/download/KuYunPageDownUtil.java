@@ -133,7 +133,7 @@ public class KuYunPageDownUtil {
             Page page = commonPageGet.download(url);
 //            System.err.println(page.getContent());
 
-            System.err.println(movieListProcessService.zdJudgmentMovieListPage(page));
+
 //            List list = movieListProcessService.processMovieList(page);
 //            for (Object o : list) {
 //                System.err.println(o);

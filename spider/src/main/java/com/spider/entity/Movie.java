@@ -2,7 +2,6 @@ package com.spider.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.github.houbb.opencc4j.util.ZhConverterUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +11,10 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author young
@@ -38,7 +41,7 @@ public class Movie {
     private String movieName = "";//电影名
 
     @Field(type = FieldType.Text)
-    private String actor="";//演员
+    private String actor = "";//演员
 
 
     @TableField("movieCategory")
@@ -48,34 +51,39 @@ public class Movie {
 //    @Field(type = FieldType.Text)
 //    private String movieState="";//更新状态
 
-     @Field(type = FieldType.Text)
-    private String  poster;//更新状态
-
-    @TableField("movieCollection")
     @Field(type = FieldType.Text)
-    private String movieCollection = "";//电影集（m3u8）
+    private String poster;//更新状态
+
+//    @TableField("movieCollection")
+//    @Field(type = FieldType.Text)
+//    private String movieCollection = "";//电影集（m3u8）
+//
+//
+//    @TableField("movieCollectionMp4")
+//    @Field(type = FieldType.Text)
+//    private String movieCollectionMp4 = "";//电影集（mp4）
 
 
-    @TableField("movieCollectionMp4")
-    @Field(type = FieldType.Text)
-    private String movieCollectionMp4 = "";//电影集（mp4）
 
 
-
-
-
+    @Field(type = FieldType.Object)
+//    private Map<Object,Object> MovieCollectionMap=new HashMap<Object,Object>();
+    private MovieCollection mc=new MovieCollection();
 
     public static void main(String[] args) throws UnsupportedEncodingException {
 
 
+        List list = new ArrayList();
+        Map<Object, Object> map = new HashMap<Object, Object>();
+        map.put("1", "1");
+        map.put("2", "2");
+        map.put("3", "2");
+        map.put("4", "4");
+        list.add(map);
 
-
-// 转换成简体
-        String simple = ZhConverterUtil.convertToSimple("草泥馬個比比了個比比喝水和氣身材興奮生意");
-        System.err.println(simple);
-// 转换成繁体
-        String traditional = ZhConverterUtil.convertToTraditional("长隆饭店广州广东电视台");
-        System.err.println(traditional);
+        list.remove(0);
+        System.err.println(list);
 
     }
 }
+

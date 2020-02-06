@@ -12,6 +12,7 @@ import java.util.List;
 public interface ProcessService {
     public List processMovieList(Page page);
     public Movie processMovie(Page page);
-    public Integer judgmentMovieListPage(Page page);
+    public Boolean processTotlePage(Page page,int pageIndex);
+    public Boolean judgmentPageDownSuccess(Page page);
 
 }
