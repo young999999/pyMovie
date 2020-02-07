@@ -108,5 +108,9 @@ public class LogUtil {
 
     }
 
+    public static void main(String[] args) {
+        File file = LogUtil.creatFile("./日志.txt");
+        LogUtil.fileWriter(file,"我的\n");
 
+    }
 }

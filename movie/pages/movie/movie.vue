@@ -60,7 +60,7 @@
 			return {
 				judge: "", //判断查询内容是否存在
 
-				InputBottom: "锦衣",
+				InputBottom: "东京",
 				data: "",
 				movieName: "",
 				movieCategory: "",
@@ -90,8 +90,8 @@
 			searchVideo() {
 
 				uni.request({
-					url: 'http://findingway.xyz:8088/movie/' + this.InputBottom, //仅为示例，并非真实接口地址。
-					// url: 'http://192.168.1.111:8087/movie/' + this.InputBottom, //仅为示例，并非真实接口地址。
+					// url: 'http://findingway.xyz:8088/movie/' + this.InputBottom, //仅为示例，并非真实接口地址。
+					url: 'http://192.168.1.111:8087/movie/' + this.InputBottom, //仅为示例，并非真实接口地址。
 
 					method: 'GET',
 
@@ -99,6 +99,9 @@
 						console.log("查找影视“" + this.InputBottom + "”成功");
 						let data = res.data;
 						console.log(data);
+						console.log(data.mc);
+						
+						
 						let len = data.length;
 
 

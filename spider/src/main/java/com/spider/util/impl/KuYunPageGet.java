@@ -3,6 +3,7 @@ package com.spider.util.impl;
 import com.spider.entity.Page;
 import com.spider.util.PageGetUtil;
 import com.spider.util.download.KuYunPageDownUtil;
+import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 
@@ -12,6 +13,7 @@ import java.io.UnsupportedEncodingException;
  *
  * 由于酷云资源的网页是GB2312编码，所以需要将酷云网页的编码转换为GBK编码
  */
+@Service
 public class KuYunPageGet implements PageGetUtil {
     @Override
     public Page download(String url) {

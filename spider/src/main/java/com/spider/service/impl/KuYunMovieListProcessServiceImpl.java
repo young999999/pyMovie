@@ -134,6 +134,7 @@ public class KuYunMovieListProcessServiceImpl implements ProcessService {
                         movieCollection = movieCollection.concat("EP" + (i + 1) + "：" + "$" + value + ",");
                     }
                 }
+//                movie.setMovieCollection(movieCollection);
                 mc.setKycollectionm3u8(movieCollection);
             }
             movieCollection="";
@@ -159,6 +160,7 @@ public class KuYunMovieListProcessServiceImpl implements ProcessService {
                     }
                 }
                 mc.setKycollectionmp4(movieCollection);
+//                movie.setMovieCollectionMp4(movieCollection);
             }
             movie.setMc(mc);
         } catch (XPatherException e) {
