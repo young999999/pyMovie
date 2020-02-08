@@ -244,7 +244,6 @@ public class Two09Controller {
 //                        byMovieNameLike.getMc().setTwo09collectionm3u8(movie.getMc().getTwo09collectionm3u8());
 //                        byMovieNameLike.getMc().setTwo09collectionmp4(movie.getMc().getTwo09collectionmp4());
 
-                        movieESDao.save(byMovieNameLike);
 
 
 //                        System.err.println(sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());

@@ -249,7 +249,7 @@ public class ZuiDaController {
 //                    byMovieNameLike.getMc().setZdcollectionm3u8(movie.getMc().getZdcollectionm3u8());
 //                    byMovieNameLike.getMc().setZdcollectionmp4(movie.getMc().getZdcollectionmp4());
 
-                    movieESDao.save(byMovieNameLike);
+
 
 
 //                        System.err.println(sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());

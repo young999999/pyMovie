@@ -229,7 +229,7 @@ public class OKController {
                 /*ES中存在该电影*/
                 else {
 
-                    length = byMovieNameLike.getMc().getZdcollectionm3u8().split(",").length;
+                    length = byMovieNameLike.getMc().getOkcollectionm3u8().split(",").length;
 //                    length = byMovieNameLike.getMovieCollection().split(",").length;
 
                     /*该电影是否与ES中存在的该电影剧集长度不相同*/
@@ -242,7 +242,7 @@ public class OKController {
 //                        byMovieNameLike.getMc().setOkcollectionm3u8(movie.getMc().getOkcollectionm3u8());
 //                        byMovieNameLike.getMc().setOkcollectionmp4(movie.getMc().getOkcollectionmp4());
 
-                        movieESDao.save(byMovieNameLike);
+
 
 
 //                        System.err.println(sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
