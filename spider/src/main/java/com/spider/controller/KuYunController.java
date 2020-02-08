@@ -1,24 +1,20 @@
 package com.spider.controller;
 
-import com.spider.controller.util.ControllerUtil;
+import com.spider.controller.util.SaveControllerUtil;
+import com.spider.controller.util.UpdateControllerutil;
 import com.spider.entity.Movie;
 import com.spider.entity.Page;
 import com.spider.mapper.MovieESDao;
 import com.spider.mapper.MovieMapper;
-import com.spider.service.impl.ZdMovieListProcessServiceImpl;
 import com.spider.util.PageGetUtil;
 import com.spider.service.ProcessService;
-import com.spider.util.impl.CommonPageGet;
 import com.spider.service.impl.KuYunMovieListProcessServiceImpl;
-import com.spider.service.impl.OkMovieListProcessServiceImpl;
 import com.spider.util.impl.KuYunPageGet;
 import com.spider.util.log.LogUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +22,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -230,14 +225,12 @@ public class KuYunController {
             if ("".equals(byMovieNameLike.getMovieName()) &&
                     "".equals(byMovieNameLike.getMc().getKycollectionmp4())) {
 
-                int movieTotle = ControllerUtil.searchTotle(movieESDao);
-                movieTotle++;
-                movie.setId(movieTotle);
-                movie.setMovieId(movieTotle);
-                movieESDao.save(movie);
+                    SaveControllerUtil saveControllerUtil =new SaveControllerUtil(movieESDao,movie,file);
+                    saveControllerUtil.setName("酷云");
+                    saveControllerUtil.start();
 
 //                    System.err.println(sdf.format(System.currentTimeMillis()) + ":添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
-                LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
+//                LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
 
             }
             /*ES中存在该电影*/
@@ -249,16 +242,17 @@ public class KuYunController {
                 /*该电影是否与ES中存在的该电影剧集长度不相同*/
                 if (length1 != length) {
 
-//                    movie.setId(byMovieNameLike.getMovieId());
-//                    movie.setMovieId(byMovieNameLike.getMovieId());
-                    byMovieNameLike.setId(byMovieNameLike.getMovieId());
-                    byMovieNameLike.getMc().setKycollectionm3u8(movie.getMc().getKycollectionm3u8());
-                    byMovieNameLike.getMc().setKycollectionmp4(movie.getMc().getKycollectionmp4());
+                    UpdateControllerutil controllerutil=new UpdateControllerutil(movieESDao,movie,file,name,"ky");
+                    controllerutil.setName("ky");
+                    controllerutil.start();
+//                    byMovieNameLike.setId(byMovieNameLike.getMovieId());
+//                    byMovieNameLike.getMc().setKycollectionm3u8(movie.getMc().getKycollectionm3u8());
+//                    byMovieNameLike.getMc().setKycollectionmp4(movie.getMc().getKycollectionmp4());
                     movieESDao.save(byMovieNameLike);
 
 
 //                        System.err.println(sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
-                    LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变或该资源新添加）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
+//                    LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变或该资源新添加）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
 
                 } else {
 //                        System.out.println(sdf.format(System.currentTimeMillis()) + ":该电影存在id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());

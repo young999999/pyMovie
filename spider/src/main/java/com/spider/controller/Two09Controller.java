@@ -1,6 +1,7 @@
 package com.spider.controller;
 
-import com.spider.controller.util.ControllerUtil;
+import com.spider.controller.util.SaveControllerUtil;
+import com.spider.controller.util.UpdateControllerutil;
 import com.spider.entity.Movie;
 import com.spider.entity.Page;
 import com.spider.mapper.MovieESDao;
@@ -218,14 +219,11 @@ public class Two09Controller {
                 /*ES中不存在该电影，直接向MySql和Elasticsearch中添加该电影*/
                 if ("".equals(byMovieNameLike.getMovieName()) &&
                         "".equals(byMovieNameLike.getMc().getTwo09collectionm3u8())) {
-                    int movieTotle = ControllerUtil.searchTotle(movieESDao);
-                    movieTotle++;
-                    movie.setId(movieTotle);
-                    movie.setMovieId(movieTotle);
-                    movieESDao.save(movie);
+                    SaveControllerUtil saveControllerUtil =new SaveControllerUtil(movieESDao,movie,file);
+                    saveControllerUtil.setName("209");
+                    saveControllerUtil.start();
 
 //                    System.err.println(sdf.format(System.currentTimeMillis()) + ":添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
-                    LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
 
                 }
                 /*ES中存在该电影*/
@@ -237,17 +235,20 @@ public class Two09Controller {
                     /*该电影是否与ES中存在的该电影剧集长度不相同*/
                     if (length1 != length) {
 
-//                    movie.setId(byMovieNameLike.getMovieId());
-//                    movie.setMovieId(byMovieNameLike.getMovieId());
-                        byMovieNameLike.setId(byMovieNameLike.getMovieId());
-                        byMovieNameLike.getMc().setTwo09collectionm3u8(movie.getMc().getTwo09collectionm3u8());
-                        byMovieNameLike.getMc().setTwo09collectionmp4(movie.getMc().getTwo09collectionmp4());
+
+                        UpdateControllerutil controllerutil=new UpdateControllerutil(movieESDao,movie,file,name,"209");
+                        controllerutil.setName("209");
+                        controllerutil.start();
+
+//                        byMovieNameLike.setId(byMovieNameLike.getMovieId());
+//                        byMovieNameLike.getMc().setTwo09collectionm3u8(movie.getMc().getTwo09collectionm3u8());
+//                        byMovieNameLike.getMc().setTwo09collectionmp4(movie.getMc().getTwo09collectionmp4());
 
                         movieESDao.save(byMovieNameLike);
 
 
 //                        System.err.println(sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
-                        LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变或该资源新添加）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
+//                        LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变或该资源新添加）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
 
                     } else {
 //                        System.out.println(sdf.format(System.currentTimeMillis()) + ":该电影存在id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
