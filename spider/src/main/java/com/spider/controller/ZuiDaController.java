@@ -221,39 +221,36 @@ public class ZuiDaController {
                     break;
                 }
             }
-
+            length = byMovieNameLike.getMc().getZdcollectionm3u8().split(",").length;
             /*ES中不存在该电影，直接向MySql和Elasticsearch中添加该电影*/
-            if ("".equals(byMovieNameLike.getMovieName()) &&
-                    "".equals(byMovieNameLike.getMc().getZdcollectionm3u8())) {
+            if ("".equals(byMovieNameLike.getMovieName()) && "".equals(byMovieNameLike.getMc().getZdcollectionm3u8())) {
                 SaveControllerUtil saveControllerUtil =new SaveControllerUtil(movieESDao,movie,file);
                 saveControllerUtil.setName("最大");
                 saveControllerUtil.start();
-
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 //                    System.err.println(sdf.format(System.currentTimeMillis()) + ":添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
 //                LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
 
             }
             /*ES中存在该电影*/
-            else {
-
-                length = byMovieNameLike.getMc().getZdcollectionm3u8().split(",").length;
-//                    length = byMovieNameLike.getMovieCollection().split(",").length;
+            else if (!"".equals(byMovieNameLike.getMovieName())){
 
                 /*该电影是否与ES中存在的该电影剧集长度不相同*/
-                if (length1 != length) {
+                if (length1 != length||"".equals(byMovieNameLike.getMc().getZdcollectionm3u8())) {
 
                     UpdateControllerutil controllerutil=new UpdateControllerutil(movieESDao,movie,file,name,"zd");
                     controllerutil.setName("zd");
                     controllerutil.start();
-//                    byMovieNameLike.setId(byMovieNameLike.getMovieId());
-//                    byMovieNameLike.getMc().setZdcollectionm3u8(movie.getMc().getZdcollectionm3u8());
-//                    byMovieNameLike.getMc().setZdcollectionmp4(movie.getMc().getZdcollectionmp4());
-
-
-
-
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 //                        System.err.println(sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
-//                    LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变或该资源新添加）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
 
                 } else {
 //                        System.out.println(sdf.format(System.currentTimeMillis()) + ":该电影存在id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());

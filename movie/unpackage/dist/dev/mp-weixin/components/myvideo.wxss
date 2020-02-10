@@ -1,22 +1,51 @@
 
-.mVideo.data-v-7a56ebf8 {
-	width: 100%;
-}
-.movieNumOut.data-v-7a56ebf8 {
-
-	width: 1000rpx;
-	height: 500rpx;
-}
-.movieNum.data-v-7a56ebf8 {
+.outter.data-v-dbbf2cd8 {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
-	-webkit-flex-wrap: wrap;
-	        flex-wrap: wrap;
-	width: 1000rpx;
+	/* 指定了弹性容器中子元素的排列方式:纵向，横向，纵向反向，横纵向反向， */
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	margin-top: 10rpx;
+	margin-bottom: 10rpx;
+	width: 100%;
 	height: 500rpx;
 }
-.movieNumBut.data-v-7a56ebf8 {
-	width: 200rpx;
+.mVideo.data-v-dbbf2cd8 {
+	-webkit-box-flex: 7;
+	-webkit-flex: 7;
+	        flex: 7;
+
+	margin-left: 10rpx;
+	margin-right: 10rpx;
+	height: 500rpx;
+}
+.movieNumOut.data-v-dbbf2cd8 {
+	-webkit-box-flex: 2;
+	-webkit-flex: 2;
+	        flex: 2;
+	/* width: 300rpx; */
+	height: 500rpx;
+}
+.movieNum.data-v-dbbf2cd8 {
+
+	display: -webkit-box;
+
+	display: -webkit-flex;
+
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	        flex-wrap: wrap;
+}
+.movieNumBut.data-v-dbbf2cd8 {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+	width: 140rpx;
+	margin-left: 10rpx;
+	margin-bottom: 5rpx;
+	border: 1px solid black;
 }
 

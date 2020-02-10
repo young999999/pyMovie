@@ -2,7 +2,7 @@
 	<view>
 		<!-- 		导航 -->
 		<cu-custom bgColor="bg-gradual-pink" :isBack="false">
-			<block slot="content">电影</block>
+			<block slot="content">{{movieName}}</block>
 			<block slot="backText">返回</block>
 		</cu-custom>
 
@@ -49,6 +49,7 @@
 
 				</view>
 			</view>
+
 		</view>
 
 	</view>
@@ -60,7 +61,7 @@
 			return {
 				judge: "", //判断查询内容是否存在
 
-				InputBottom: "东京",
+				InputBottom: "锦衣之下",
 				data: "",
 				movieName: "",
 				movieCategory: "",
@@ -84,14 +85,19 @@
 
 				uni.navigateTo({
 					// url: "../../components/video?movieData=" + data  
-					url: "../../components/myvideo?movieCollection=" + data.movieCollection + "&movieName=" + data.movieName+"&movieCollectionMp4=" + data.movieCollectionMp4
+					url: "../../components/myvideo?movieName="+data.movieName
+												 +"&kycollectionm3u8=" + data.mc.kycollectionm3u8+"&kycollectionmp4="+data.mc.kycollectionmp4
+												 +"&okcollectionm3u8="+data.mc.okcollectionm3u8+"&okcollectionmp4="+data.mc.okcollectionmp4
+												 +"&two09collectionm3u8="+data.mc.two09collectionm3u8+"&two09collectionmp4="+data.mc.two09collectionmp4
+												 +"&zdcollectionm3u8="+data.mc.zdcollectionm3u8+"&zdcollectionmp4="+data.mc.zdcollectionmp4
+					// url: "../../components/myvideo?movieCollection=" + data.movieCollection + "&movieName=" + data.movieName+"&movieCollectionMp4=" + data.movieCollectionMp4
 				})
 			},
 			searchVideo() {
 
 				uni.request({
-					// url: 'http://findingway.xyz:8088/movie/' + this.InputBottom, //仅为示例，并非真实接口地址。
-					url: 'http://192.168.1.111:8087/movie/' + this.InputBottom, //仅为示例，并非真实接口地址。
+					url: 'http://findingway.xyz:8088/movie/' + this.InputBottom, //仅为示例，并非真实接口地址。
+					// url: 'http://192.168.1.111:8087/movie/' + this.InputBottom, //仅为示例，并非真实接口地址。
 
 					method: 'GET',
 
@@ -99,7 +105,7 @@
 						console.log("查找影视“" + this.InputBottom + "”成功");
 						let data = res.data;
 						console.log(data);
-						console.log(data.mc);
+
 						
 						
 						let len = data.length;

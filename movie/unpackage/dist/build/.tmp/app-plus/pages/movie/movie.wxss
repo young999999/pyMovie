@@ -1,0 +1,44 @@
+
+.outter.data-v-64253665 {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	margin: 10rpx;
+	padding: 20rpx;
+	width: 100%;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+}
+.movieLeft.data-v-64253665 {
+	-webkit-box-flex: 3;
+	-webkit-flex: 3;
+	        flex: 3;
+	margin-right: 10rpx;
+	height: 300rpx;
+}
+.movieRight.data-v-64253665 {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-flex: 5;
+	-webkit-flex: 5;
+	        flex: 5;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+}
+.movieBtn.data-v-64253665 {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+	height: 100rpx;
+}
+.movieInfor.data-v-64253665 {
+	-webkit-box-flex: 3;
+	-webkit-flex: 3;
+	        flex: 3;
+}
+

@@ -48,4 +48,27 @@
 	margin-bottom: 5rpx;
 	border: 1px solid black;
 }
+.collapse.data-v-dbbf2cd8 {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+}
+.collapse-item.data-v-dbbf2cd8 {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	width: 190rpx;
+}
+.collapse-item-btn.data-v-dbbf2cd8 {
+	width: 90rpx;
+	font-size: 20rpx;
+}
 
