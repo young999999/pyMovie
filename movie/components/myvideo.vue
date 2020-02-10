@@ -14,7 +14,8 @@
 			<scroll-view class="movieNumOut " scroll-y="true">
 				<view class="movieNum">
 					<view v-for="(item ,index) of movieNumber" :key="index">
-						<button class="movieNumBut text-xs" @click="getUrl(index)">第{{index+1}}集</button>
+						<button class="movieNumBut text-xs" @click="getUrl(index)" :class="{ liBackground:changeLeftBackground == index}"
+							>第{{index+1}}集</button>
 					</view>
 				</view>
 			</scroll-view>
@@ -71,6 +72,7 @@
 		},
 		data() {
 			return {
+				changeLeftBackground: "k",
 				collapseitembtn: true,
 				movieName: "",
 				movieUrl: "",
@@ -108,7 +110,7 @@
 			getUrl(index) {
 				// console.log(this.lineSwitch);
 				this.movieUrl = this.lineSwitch.toString().split(",")[index].split("$")[1];
-
+				this.changeLeftBackground = index;
 				console.log(this.movieUrl);
 
 			},
@@ -125,44 +127,44 @@
 					if (pattern == "m3u8") {
 						this.lineSwitch = this.kycollectionm3u8
 						this.movieNumber = this.kycollectionm3u8.toString().split(",").length
-						if(this.lineSwitch=="") this.movieNumber=0
+						if (this.lineSwitch == "") this.movieNumber = 0
 					} else {
 						this.lineSwitch = this.kycollectionmp4
 						this.movieNumber = this.kycollectionmp4.toString().split(",").length
-						if(this.lineSwitch=="") this.movieNumber=0
+						if (this.lineSwitch == "") this.movieNumber = 0
 					}
 				}
 				if (line == "ok") {
 					if (pattern == "m3u8") {
 						this.lineSwitch = this.okcollectionm3u8
 						this.movieNumber = this.okcollectionm3u8.toString().split(",").length
-						if(this.lineSwitch=="") this.movieNumber=0
+						if (this.lineSwitch == "") this.movieNumber = 0
 					} else {
 						this.lineSwitch = this.okcollectionmp4
 						this.movieNumber = this.okcollectionmp4.toString().split(",").length
-						if(this.lineSwitch=="") this.movieNumber=0
+						if (this.lineSwitch == "") this.movieNumber = 0
 					}
 				}
 				if (line == "zd") {
 					if (pattern == "m3u8") {
 						this.lineSwitch = this.zdcollectionm3u8
 						this.movieNumber = this.zdcollectionm3u8.toString().split(",").length
-						if(this.lineSwitch=="") this.movieNumber=0
+						if (this.lineSwitch == "") this.movieNumber = 0
 					} else {
 						this.lineSwitch = this.zdcollectionmp4
 						this.movieNumber = this.zdcollectionmp4.toString().split(",").length
-						if(this.lineSwitch=="") this.movieNumber=0
+						if (this.lineSwitch == "") this.movieNumber = 0
 					}
 				}
 				if (line == "209") {
 					if (pattern == "m3u8") {
 						this.lineSwitch = this.two09collectionm3u8
 						this.movieNumber = this.two09collectionm3u8.toString().split(",").length
-						if(this.lineSwitch=="") this.movieNumber=0
+						if (this.lineSwitch == "") this.movieNumber = 0
 					} else {
 						this.lineSwitch = this.two09collectionmp4
 						this.movieNumber = this.two09collectionmp4.toString().split(",").length
-						if(this.lineSwitch=="") this.movieNumber=0
+						if (this.lineSwitch == "") this.movieNumber = 0
 					}
 				}
 				// console.log(this.lineSwitch);
@@ -210,6 +212,10 @@
 		margin-left: 10rpx;
 		margin-bottom: 5rpx;
 		border: 1px solid black;
+	}
+
+	.liBackground {
+		background-color: #007AFF;
 	}
 
 	.collapse {
