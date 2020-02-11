@@ -14,47 +14,53 @@
 			<scroll-view class="movieNumOut " scroll-y="true">
 				<view class="movieNum">
 					<view v-for="(item ,index) of movieNumber" :key="index">
-						<button class="movieNumBut text-xs" @click="getUrl(index)" :class="{ liBackground:changeLeftBackground == index}"
-							>第{{index+1}}集</button>
+						<button class="movieNumBut text-xs bg-red" @click="getUrl(index)" :class="{ liBackground:changeLeftBackground == index}">第{{index+1}}集</button>
 					</view>
 				</view>
 			</scroll-view>
 
 		</view>
 
-		<!-- <view>{{movieUrl}}</view> -->
 
+		<view class="text-red">当前线路：{{currentLine}}</view>
 
-		<view class="text-blue">线路切换</view>
-		<uni-collapse class="collapse" @change="collapseItemBtn(1,0,0)">
+		<view class="collapse">
 
-			<uni-collapse-item title="酷云资源">
-				<view class="collapse-item">
-					<button v-show="collapseitembtn" @click="collapseItemBtn(2,'ky','m3u8')" class="collapse-item-btn text-sm" type="primary">m3u8</button>
-					<button v-show="collapseitembtn" @click="collapseItemBtn(2,'ky','mp4')" class="collapse-item-btn text-sm" type="primary">mp4</button>
+			<view class="collapse-content">
+				<button class="collapse-content-btn bg-pink text-sm" @click="collapseItemBtn(2,0,0)">酷云资源</button>
+				<view class="collapse-content-item">
+					<button class="collapse-item-btn bg-pink" v-show="collapseitembtn" @click="collapseItemBtn(2,'ky','m3u8')">m3u8</button>
+					<button class="collapse-item-btn bg-pink" v-show="collapseitembtn" @click="collapseItemBtn(2,'ky','mp4')">mp4</button>
 				</view>
-			</uni-collapse-item>
-			<uni-collapse-item title="OK资源">
-				<view class="collapse-item">
-					<button v-show="collapseitembtn" @click="collapseItemBtn(2,'ok','m3u8')" class="collapse-item-btn text-sm" type="primary">m3u8</button>
-					<button v-show="collapseitembtn" @click="collapseItemBtn(2,'ok','mp4')" class="collapse-item-btn text-sm" type="primary">mp4</button>
+			</view>
+
+			<view class="collapse-content">
+				<button class="collapse-content-btn bg-pink text-sm" @click="collapseItemBtn(2,0,0)">OK资源</button>
+				<view class="collapse-content-item">
+					<button class="collapse-item-btn bg-pink" v-show="collapseitembtn" @click="collapseItemBtn(2,'ok','m3u8')">m3u8</button>
+					<button class="collapse-item-btn bg-pink" v-show="collapseitembtn" @click="collapseItemBtn(2,'ok','mp4')">mp4</button>
 				</view>
-			</uni-collapse-item>
-			<uni-collapse-item title="最大资源">
-				<view class="collapse-item">
-					<button v-show="collapseitembtn" @click="collapseItemBtn(2,'zd','m3u8')" class="collapse-item-btn text-sm" type="primary">m3u8</button>
-					<button v-show="collapseitembtn" @click="collapseItemBtn(2,'zd','mp4')" class="collapse-item-btn text-sm" type="primary">mp4</button>
+			</view>
+
+			<view class="collapse-content">
+				<button class="collapse-content-btn bg-pink text-sm" @click="collapseItemBtn(2,0,0)">最大资源</button>
+				<view class="collapse-content-item">
+					<button class="collapse-item-btn bg-pink" v-show="collapseitembtn" @click="collapseItemBtn(2,'zd','m3u8')">m3u8</button>
+					<button class="collapse-item-btn bg-pink" v-show="collapseitembtn" @click="collapseItemBtn(2,'zd','mp4')">mp4</button>
 				</view>
-			</uni-collapse-item>
-			<uni-collapse-item title="209资源">
-				<view class="collapse-item">
-					<button v-show="collapseitembtn" @click="collapseItemBtn(2,'209','m3u8')" class="collapse-item-btn text-sm" type="primary">m3u8</button>
-					<button v-show="collapseitembtn" @click="collapseItemBtn(2,'209','mp4')" class="collapse-item-btn text-sm" type="primary">mp4</button>
+			</view>
+
+			<view class="collapse-content">
+				<button class="collapse-content-btn bg-pink text-sm" @click="collapseItemBtn(2,0,0)">209资源</button>
+				<view class="collapse-content-item">
+					<button class="collapse-item-btn bg-pink" v-show="collapseitembtn" @click="collapseItemBtn(2,'209','m3u8')">m3u8</button>
+					<button class="collapse-item-btn bg-pink" v-show="collapseitembtn" @click="collapseItemBtn(2,'209','mp4')">mp4</button>
 				</view>
-			</uni-collapse-item>
+			</view>
+
+		</view>
 
 
-		</uni-collapse>
 
 	</view>
 
@@ -73,7 +79,7 @@
 		data() {
 			return {
 				changeLeftBackground: "k",
-				collapseitembtn: true,
+				collapseitembtn: false,
 				movieName: "",
 				movieUrl: "",
 				kycollectionm3u8: "",
@@ -85,6 +91,7 @@
 				zdcollectionm3u8: "",
 				zdcollectionmp4: "",
 				lineSwitch: "",
+				currentLine: "酷云mp4",
 				movieCategory: "",
 				movieNumber: "",
 			};
@@ -118,7 +125,6 @@
 
 				if (data == 1) {
 					this.collapseitembtn = true
-
 				} else {
 					this.collapseitembtn = !this.collapseitembtn;
 				}
@@ -128,10 +134,12 @@
 						this.lineSwitch = this.kycollectionm3u8
 						this.movieNumber = this.kycollectionm3u8.toString().split(",").length
 						if (this.lineSwitch == "") this.movieNumber = 0
+						this.currentLine = "酷云资源m3u8";
 					} else {
 						this.lineSwitch = this.kycollectionmp4
 						this.movieNumber = this.kycollectionmp4.toString().split(",").length
 						if (this.lineSwitch == "") this.movieNumber = 0
+						this.currentLine = "酷云资源mp4";
 					}
 				}
 				if (line == "ok") {
@@ -139,10 +147,12 @@
 						this.lineSwitch = this.okcollectionm3u8
 						this.movieNumber = this.okcollectionm3u8.toString().split(",").length
 						if (this.lineSwitch == "") this.movieNumber = 0
+						this.currentLine = "OK资源m3u8";
 					} else {
 						this.lineSwitch = this.okcollectionmp4
 						this.movieNumber = this.okcollectionmp4.toString().split(",").length
 						if (this.lineSwitch == "") this.movieNumber = 0
+						this.currentLine = "OK资源mp4";
 					}
 				}
 				if (line == "zd") {
@@ -150,10 +160,12 @@
 						this.lineSwitch = this.zdcollectionm3u8
 						this.movieNumber = this.zdcollectionm3u8.toString().split(",").length
 						if (this.lineSwitch == "") this.movieNumber = 0
+						this.currentLine = "最大资源m3u8";
 					} else {
 						this.lineSwitch = this.zdcollectionmp4
 						this.movieNumber = this.zdcollectionmp4.toString().split(",").length
 						if (this.lineSwitch == "") this.movieNumber = 0
+						this.currentLine = "最大资源m3u8";
 					}
 				}
 				if (line == "209") {
@@ -161,13 +173,15 @@
 						this.lineSwitch = this.two09collectionm3u8
 						this.movieNumber = this.two09collectionm3u8.toString().split(",").length
 						if (this.lineSwitch == "") this.movieNumber = 0
+						this.currentLine = "209资源m3u8";
 					} else {
 						this.lineSwitch = this.two09collectionmp4
 						this.movieNumber = this.two09collectionmp4.toString().split(",").length
 						if (this.lineSwitch == "") this.movieNumber = 0
+						this.currentLine = "208资源mp4";
 					}
 				}
-				// console.log(this.lineSwitch);
+
 
 			}
 		}
@@ -215,7 +229,7 @@
 	}
 
 	.liBackground {
-		background-color: #007AFF;
+		background-color: #E03997;
 	}
 
 	.collapse {
@@ -223,15 +237,29 @@
 		flex-direction: row;
 	}
 
-	.collapse-item {
+	.collapse-content {
+		width: 24%;
+		display: flex;
+		flex-direction: column;
+		margin-left: 10rpx;
+	}
+
+	.collapse-content-btn {
+		width: 100%;
+	}
+
+	.collapse-content-item {
 		display: flex;
 		flex-direction: row;
-		width: 190rpx;
 	}
 
 	.collapse-item-btn {
-		width: 90rpx;
-		font-size: 20rpx;
+		/* width: 200rpx; */
+
+		flex: 1;
+		height: 50rpx;
+		text-align: center;
+		font-size: 25rpx;
 
 	}
 </style>
