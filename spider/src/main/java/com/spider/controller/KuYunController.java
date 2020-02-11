@@ -228,11 +228,11 @@ public class KuYunController {
                     SaveControllerUtil saveControllerUtil =new SaveControllerUtil(movieESDao,movie,file);
                     saveControllerUtil.setName("酷云");
                     saveControllerUtil.start();
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(2000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
 //                    System.err.println(sdf.format(System.currentTimeMillis()) + ":添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
 
             }
@@ -245,11 +245,11 @@ public class KuYunController {
                     UpdateControllerutil controllerutil=new UpdateControllerutil(movieESDao,movie,file,name,"ky");
                     controllerutil.setName("ky");
                     controllerutil.start();
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        Thread.sleep(2000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
 
 //                        System.err.println(sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
 
