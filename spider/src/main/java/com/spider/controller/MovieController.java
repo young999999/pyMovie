@@ -1,12 +1,12 @@
 package com.spider.controller;
 
-import com.spider.controller.util.SaveControllerUtil;
 import com.spider.entity.Movie;
 import com.spider.mapper.MovieESDao;
 import com.spider.mapper.MovieMapper;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -24,15 +24,24 @@ public class MovieController {
     @Autowired
     MovieESDao movieESDao;
 
+
     @GetMapping("movie/{name}")
     @ResponseBody
-    public List<Movie> getMovie(@PathVariable(value = "name") String name){
-
-
-//        Movie movie = movieMapper.findByMovieName(name);
+    public List getMovie(@PathVariable(value = "name") String name){
         List<Movie> byMovieName = movieESDao.findByMovieName(name);
-//        System.err.println(movie);
+
         return byMovieName;
+    }
+
+    @GetMapping("movie/full/{name}")
+    @ResponseBody
+    public Movie getMovieByFullName(@PathVariable(value = "name") String name) {
+        List<Movie> byMovieName = movieESDao.findByMovieName(name);
+        for (Movie movie : byMovieName) {
+            if (movie.getMovieName().equals(name)) return movie;
+        }
+//        System.err.println(movie);
+        return null;
     }
 
 
@@ -46,12 +55,26 @@ public class MovieController {
 
     @GetMapping("movie1/{id}")
     @ResponseBody
-    public Movie getMovie1(@PathVariable(value = "id") Long id) {
-
-        Movie movie = movieMapper.selectById(id);
+    public Movie getMovie1(@PathVariable(value = "id") int id) {
+        Movie movie=new Movie();
+//        MovieCollection movieCollection=new MovieCollection("1","1","1","1","1","1","1","1");
+//        movie.setMovieId(id);
+//        movie.setMovieName("锦衣之下");
+//        movie.setPoster("132");
+//        movie.setActor("oy");
+//        movie.setMovieCategory("dd");
+//        movie.setMc(movieCollection);
+//        movieMapper.insert(movie);
+         movie = movieMapper.selectById(id);
         System.err.println(movie);
         return movie;
     }
-
+    @GetMapping("rest")
+    public Movie restTest(){
+        RestTemplate restTemplate=new RestTemplate();
+        Movie movie=restTemplate.getForObject("http://localhost:8088/movie/full/锦衣之下",Movie.class);
+        System.err.println(movie);
+        return movie;
+    }
 
 }

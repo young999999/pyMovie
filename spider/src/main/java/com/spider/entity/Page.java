@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor //生成无参的构造方法。
 public class Page {
     //内容
-    private String content;
+    private String content="";
+    private int statusCode=0;
 
 
 }

@@ -1,7 +1,12 @@
 package com.spider.entity;
 
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +24,8 @@ import java.io.UnsupportedEncodingException;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor //生成无参的构造方法。
-@TableName("movie")
+@TableName(value = "movie",autoResultMap = true)
+
 @Document(indexName = "movie", type = "movie")
 public class Movie {
 
@@ -36,6 +42,7 @@ public class Movie {
     @Field(index = true, type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word")
     private String movieName = "";//电影名
 
+    @TableField("actor")
     @Field(type = FieldType.Text)
     private String actor = "";//演员
 
@@ -47,22 +54,19 @@ public class Movie {
 //    @Field(type = FieldType.Text)
 //    private String movieState="";//更新状态
 
+    @TableField("poster")
     @Field(type = FieldType.Text)
     private String poster;//更新状态
 
-//    @TableField("movieCollection")
-//    @Field(type = FieldType.Text)
-//    private String movieCollection = "";//电影集（m3u8）
-//
-//
-//    @TableField("movieCollectionMp4")
-//    @Field(type = FieldType.Text)
-//    private String movieCollectionMp4 = "";//电影集（mp4）
 
-
+    @TableField(typeHandler = JacksonTypeHandler.class)
+//    @TableField(typeHandler = FastjsonTypeHandler.class)
     @Field(type = FieldType.Object)
-//    private Map<Object,Object> MovieCollectionMap=new HashMap<Object,Object>();
-    private MovieCollection mc = new MovieCollection();
+    private MovieCollection mc=new MovieCollection();
+
+
+
+
 
     public static void main(String[] args) throws UnsupportedEncodingException {
 

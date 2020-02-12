@@ -240,7 +240,7 @@ public class ZuiDaController {
             else if (!"".equals(byMovieNameLike.getMovieName())){
 
                 /*该电影是否与ES中存在的该电影剧集长度不相同*/
-                if (length1 != length||"".equals(byMovieNameLike.getMc().getZdcollectionm3u8())) {
+                if (length1 > length||"".equals(byMovieNameLike.getMc().getZdcollectionm3u8())) {
 
                     UpdateControllerutil controllerutil=new UpdateControllerutil(movieESDao,movie,file,name,"zd");
                     controllerutil.setName("zd");

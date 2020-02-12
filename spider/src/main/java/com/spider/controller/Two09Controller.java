@@ -234,7 +234,7 @@ public class Two09Controller {
 
 
                     /*该电影是否与ES中存在的该电影剧集长度不相同*/
-                    if (length1 != length||"".equals(byMovieNameLike.getMc().getTwo09collectionm3u8())) {
+                    if (length1 > length||"".equals(byMovieNameLike.getMc().getTwo09collectionm3u8())) {
 
 
                         UpdateControllerutil controllerutil=new UpdateControllerutil(movieESDao,movie,file,name,"209");

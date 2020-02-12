@@ -39,10 +39,12 @@ public class SaveControllerUtil extends Thread{
             movieTotle++;
             movie.setId(movieTotle);
             movie.setMovieId(movieTotle);
-            movieESDao.save(movie);
+            Movie save = movieESDao.save(movie);
+            System.err.println(sdf.format(System.currentTimeMillis()) +" "+movieTotle +" "+save.getMovieName());
             LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
 
 //            System.err.println(Thread.currentThread().getName()+"："+movieTotle+" 添加");
+
         }
 
 

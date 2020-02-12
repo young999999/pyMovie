@@ -9,6 +9,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.config.SocketConfig;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
@@ -18,6 +19,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author young
@@ -25,52 +28,77 @@ import java.io.UnsupportedEncodingException;
  */
 
 public class PageDownUtil {
-    public static String getPageContent(String url) {
+    static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    public static Page getPageContent(String url) {
+        Page page = new Page();
         String content = null;
         int statusCode = 0;
-        while (statusCode != 200) {
-            HttpClientBuilder builder = HttpClients.custom();
-            builder.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36");
 
-            SocketConfig socketConfig = SocketConfig.custom().setSoTimeout(40).build();
-            BasicHttpClientConnectionManager httpClientConnectionManager = new BasicHttpClientConnectionManager();
-            httpClientConnectionManager.setSocketConfig(socketConfig);
+        HttpClientBuilder builder = HttpClients.custom();
+        builder.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36");
 
-            CloseableHttpClient client = builder.build();
+        builder.setConnectionTimeToLive(60, TimeUnit.SECONDS);
+
+        SocketConfig socketConfig = SocketConfig.custom()
+                .setSoTimeout(60000)
+                .setSoKeepAlive(true)
+                .setSoReuseAddress(true)
+                .build();
+
+        builder.setDefaultSocketConfig(socketConfig);
+        BasicHttpClientConnectionManager httpClientConnectionManager = new BasicHttpClientConnectionManager();
+        httpClientConnectionManager.setSocketConfig(socketConfig);
+
+        CloseableHttpClient client = builder.build();
 
 
-            HttpGet request = new HttpGet(url);
-            request.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
-            request.addHeader("Accept-Encoding", "gzip, deflate");
-            request.addHeader("Accept-Language", "zh-CN,zh;q=0.9");
-            request.addHeader("Cache-Control", "max-age=0");
-            request.addHeader("Connection", "keep-alive");
-            request.addHeader("Upgrade-Insecure-Requests", "1");
+        HttpGet request = new HttpGet(url);
+        request.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
+        request.addHeader("Accept-Encoding", "gzip, deflate");
+        request.addHeader("Accept-Language", "zh-CN,zh;q=0.9");
+        request.addHeader("Cache-Control", "max-age=0");
+        request.addHeader("Connection", "keep-alive");
+        request.addHeader("Upgrade-Insecure-Requests", "1");
 //        request.addHeader("Cookie","ASPSESSIONIDQASSQADC=COJJCHGAFLDBAFODPBPFNKDJ; __51cke__=; ASPSESSIONIDSASRSADD=KHPJHCGALNNIOOOIAMDEIEFF; ASPSESSIONIDSATRSACC=JKFKMNFAMOMNAEENGNJKKPKI; ASPSESSIONIDSATQTBDD=FHMBNEGAPHODPNKIEKPLCJHM; ASPSESSIONIDSASTRADC=EJDCCAGANJIEMIBDIHGMPIGE; ASPSESSIONIDSCTSQADC=IJIDIJGAGPODDEKNJGGCKLHG; ASPSESSIONIDQCSSRBCC=LPJLNLGAKHKIDPHLEKGMFJCG; ASPSESSIONIDQASSRBDC=ELDKBEKAHINCPBODOIMCEJOE; ASPSESSIONIDSCQTQACD=JGFJHNKANOPGBPDIDHNABPDI; ASPSESSIONIDQCRRTBDD=HHOKMIKAJKNNAAEABELICPDL; ASPSESSIONIDQAQRSBCD=EPLDNPKAOBAAPLIMPEGGNONK; ASPSESSIONIDQCSTSDAD=BJHKDAMAAGFFJNOAIOOHFIMN; ASPSESSIONIDQATRSACC=KFAOILLALINMNNCJHIHFBONM; ASPSESSIONIDSARRTBCD=ODNBJCMANDHPPBHKKIPIFFMO; ASPSESSIONIDQARRTACC=NGMMJJMAKLDMINNEOIAJFMNK; ASPSESSIONIDQCSSQBCD=AKKLEJBBHEIHBAMHHFBGHHJH; __tins__19534235=%7B%22sid%22%3A%201580873323093%2C%20%22vd%22%3A%201%2C%20%22expires%22%3A%201580875123093%7D; __51laig__=38");
 //        request.addHeader("Host","wwww.kuyunzy1.com");
 //        request.addHeader("Referer","http://www.kuyunzy1.com/");
-
-            try {
-                CloseableHttpResponse response = null;
-
-                response = client.execute(request);
-                statusCode = response.getStatusLine().getStatusCode();
+        CloseableHttpResponse response = null;
+        try {
 
 
+            response = client.execute(request);
+            statusCode = response.getStatusLine().getStatusCode();
 
-                HttpEntity entity = response.getEntity();
-                content = EntityUtils.toString(entity);
+
+            HttpEntity entity = response.getEntity();
+            content = EntityUtils.toString(entity);
 //            content = EntityUtils.toString(entity, "gb2312");//kuyun
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
+
+            page.setStatusCode(statusCode);
+            page.setContent(content);
+        } catch (HttpHostConnectException e) {
+//                System.err.println(sdf.format(System.currentTimeMillis()) + " socket连接错误："+e.getMessage());
+        } catch (ClientProtocolException e) {
+//                System.err.println(sdf.format(System.currentTimeMillis()) + " 客户端协议异常"+e.getMessage());
+        } catch (IOException e) {
+//                System.err.println(sdf.format(System.currentTimeMillis()) + " IO异常"+e.getMessage());
+        } finally {
+            request.releaseConnection();
+            try {
+                assert response != null;
+                response.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println(sdf.format(System.currentTimeMillis()) + " response关闭异常：" + e.getMessage());
+//                    e.printStackTrace();
             } finally {
-                request.releaseConnection();
+
+                System.out.println("退出网页下载");
+                return page;
             }
         }
 
-        return content;
+
     }
 
 

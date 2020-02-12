@@ -234,7 +234,7 @@ public class OKController {
 
                     /*该电影是否与ES中存在的该电影剧集长度不相同*/
 
-                    if (length1 != length||"".equals(byMovieNameLike.getMc().getOkcollectionm3u8())) {
+                    if (length1 > length||"".equals(byMovieNameLike.getMc().getOkcollectionm3u8())) {
 
                         UpdateControllerutil controllerutil=new UpdateControllerutil(movieESDao,movie,file,name,"ok");
                         controllerutil.setName("ok");

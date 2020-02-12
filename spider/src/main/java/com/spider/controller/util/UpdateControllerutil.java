@@ -69,7 +69,7 @@ public class UpdateControllerutil extends Thread {
 
                     movieESDao.save(byMovieNameLike);
                     LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变或该资源新添加）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
-//                    System.err.println(Thread.currentThread().getName() + "：" + byMovieNameLike.getMovieId() + " 更新:"+flag);
+                    System.err.println(sdf.format(System.currentTimeMillis()) +" " + byMovieNameLike.getMovieId() + " 更新:"+flag);
                     return;
                 }
             }

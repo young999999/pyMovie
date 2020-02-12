@@ -6,9 +6,9 @@ import com.spider.entity.Movie;
 import com.spider.entity.Page;
 import com.spider.mapper.MovieESDao;
 import com.spider.mapper.MovieMapper;
-import com.spider.util.PageGetUtil;
 import com.spider.service.ProcessService;
 import com.spider.service.impl.KuYunMovieListProcessServiceImpl;
+import com.spider.util.PageGetUtil;
 import com.spider.util.impl.KuYunPageGet;
 import com.spider.util.log.LogUtil;
 import io.swagger.annotations.Api;
@@ -34,6 +34,7 @@ import java.util.List;
 @RestController
 @Api(tags = "酷云资源", description = "有关www.kuyunzy1.com网站的爬取")
 @CrossOrigin
+
 public class KuYunController {
 
     @Autowired
@@ -48,7 +49,8 @@ public class KuYunController {
     KuYunMovieListProcessServiceImpl zd;
 
 
-    String baseurl = "http://www.kuyunzy1.com";
+    String baseurl = "http://www.kuyun9.com/";
+//    String baseurl = "http://www.kuyunzy1.com/";
 
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -197,7 +199,7 @@ public class KuYunController {
             }
 
 
-            int length = 0;
+
             /*根据爬取到的电影名字查询ES，名字转义 /  ~ ！? [ * ^等特殊字符*/
             String name = QueryParser.escape(movie.getMovieName());
 
@@ -220,6 +222,7 @@ public class KuYunController {
                     break;
                 }
             }
+            int length = 0;
             length = byMovieNameLike.getMc().getKycollectionm3u8().split(",").length;
 
             /*ES中不存在该电影，直接向MySql和Elasticsearch中添加该电影*/
@@ -240,7 +243,7 @@ public class KuYunController {
             else if (!"".equals(byMovieNameLike.getMovieName())){
 
                 /*该电影是否与ES中存在的该电影剧集长度不相同*/
-                if (length1 != length||"".equals(byMovieNameLike.getMc().getKycollectionmp4())) {
+                if (length1 > length||"".equals(byMovieNameLike.getMc().getKycollectionmp4())) {
 
                     UpdateControllerutil controllerutil=new UpdateControllerutil(movieESDao,movie,file,name,"ky");
                     controllerutil.setName("ky");
@@ -254,7 +257,7 @@ public class KuYunController {
 //                        System.err.println(sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
 
                 } else {
-//                        System.out.println(sdf.format(System.currentTimeMillis()) + ":该电影存在id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
+                        System.out.println(sdf.format(System.currentTimeMillis()) + ":该电影存在id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
                     LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":该电影存在id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
 
                 }

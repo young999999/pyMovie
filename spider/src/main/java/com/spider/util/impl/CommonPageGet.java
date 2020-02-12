@@ -1,9 +1,13 @@
 package com.spider.util.impl;
 
 import com.spider.entity.Page;
+import com.spider.util.download.KuYunPageDownUtil;
 import com.spider.util.download.PageDownUtil;
 import com.spider.util.PageGetUtil;
 import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author young
@@ -14,13 +18,21 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CommonPageGet implements PageGetUtil {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @Override
     public Page download(String url) {
-        Page page = new Page();
-        String content= PageDownUtil.getPageContent(url);
-
-        page.setContent(content);
-
+        Page page=PageDownUtil.getPageContent(url);
+        while ("".equals(page.getContent()) || 200 != page.getStatusCode()) {
+            page = KuYunPageDownUtil.getPageContent(url);
+            if ("".equals(page.getContent()) || 200 != page.getStatusCode()) {
+                System.err.println(sdf.format(System.currentTimeMillis())+" 下载出错，重新下载");
+                try {
+                    TimeUnit.SECONDS.sleep(3);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return page;
     }
 }

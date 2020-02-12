@@ -1,5 +1,5 @@
 server:
-  port: 8087
+  port: 8088
   max-http-header-size: 32KB
   tomcat:
     remote-ip-header: x-forward-for
@@ -9,7 +9,7 @@ server:
     connection-timeout: 80000
 
 spring:
-#  profiles: dev
+  #  profiles: dev
   #    active:          #druid, mybatisplus
   application:
     name: spider
@@ -20,10 +20,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     # 使用druid连接池
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://47.98.53.232:3306/movie?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-#    url: jdbc:mysql://192.168.1.68:3306/movie?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/movie?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    #    url: jdbc:mysql://192.168.1.68:3306/movie?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
-    password: 1234
+    password: young19951006
     druid:
       # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
@@ -84,9 +84,10 @@ spring:
 
   data:
     elasticsearch:
-#        cluster-nodes: 47.98.53.232:9300 #5.6.8
-      cluster-nodes: 192.168.1.68:9300 #7.5.1
-      cluster-name: my-application  #高版本加，如7.5.1；低版本不加，如5.6.8
+      cluster-nodes: localhost:9300 #5.6.8
+#      cluster-nodes: 47.98.53.232:9300 #5.6.8
+#      cluster-nodes: 192.168.1.68:9300 #7.5.1
+#      cluster-name: my-application  #高版本加，如7.5.1；低版本不加，如5.6.8
 
 
 
