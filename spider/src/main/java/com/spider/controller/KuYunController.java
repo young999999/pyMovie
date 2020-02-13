@@ -49,8 +49,8 @@ public class KuYunController {
     KuYunMovieListProcessServiceImpl zd;
 
 
-    String baseurl = "http://www.kuyun9.com/";
-//    String baseurl = "http://www.kuyunzy1.com/";
+//    String baseurl = "http://www.kuyun9.com/";
+    String baseurl = "http://www.kuyunzy1.com/";
 
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -112,7 +112,7 @@ public class KuYunController {
                 }
                 downPageNum = 0;
                 break;
-            }
+            }else if (downPageNum > 10) break;
             if (downPageNum == 1) {
 //                    System.err.println("下载电影集合页面失败 " + downPageNum + " " + url);
                 LogUtil.fileWriter(file, "下载电影集合页面失败 " + downPageNum + " " + url);
@@ -143,7 +143,7 @@ public class KuYunController {
                     }
                     downPageNum = 0;
                     break;
-                }
+                }else if (downPageNum > 10) break;
                 if (downPageNum == 1) {
 //                        System.err.println("下载电影信息页面失败 " + downPageNum + " " + movieUrl);
                     LogUtil.fileWriter(file, "下载电影信息页面失败 " + downPageNum + " " + movieUrl);

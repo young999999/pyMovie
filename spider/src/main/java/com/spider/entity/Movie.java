@@ -35,7 +35,7 @@ public class Movie {
     private int id;
 
     @TableField("movieId")
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Integer)
     private int movieId = 0;//电影ID，值等于id，因id不能被后台获取，增加此属性
 
     @TableField("movieName")

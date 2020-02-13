@@ -6,6 +6,7 @@ import com.spider.service.impl.KuYunMovieListProcessServiceImpl;
 import com.spider.util.impl.KuYunPageGet;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.config.SocketConfig;
@@ -39,23 +40,17 @@ public class KuYunPageDownUtil {
 
         HttpClientBuilder builder = HttpClients.custom();
         builder.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36");
-        builder.setConnectionTimeToLive(60, TimeUnit.SECONDS);
-
-        SocketConfig socketConfig = SocketConfig.custom()
-                .setSoTimeout(60000)
-                .setSoKeepAlive(true)
-                .setSoReuseAddress(true)
-                .build();
-
-        builder.setDefaultSocketConfig(socketConfig);
-        BasicHttpClientConnectionManager httpClientConnectionManager = new BasicHttpClientConnectionManager();
-        httpClientConnectionManager.setSocketConfig(socketConfig);
-
-
         CloseableHttpClient client = builder.build();
 
+        RequestConfig requestConfig=RequestConfig.custom()
+                .setConnectTimeout(10000)//创建连接最长时间
+                .setConnectionRequestTimeout(500)//获取连接最长时间
+                .setSocketTimeout(30000)//数据传输的最长时间
+                .build();
 
         HttpGet request = new HttpGet(url);
+        request.setConfig(requestConfig);
+
         request.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
         request.addHeader("Accept-Encoding", "gzip, deflate");
         request.addHeader("Accept-Language", "zh-CN,zh;q=0.9");

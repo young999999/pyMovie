@@ -58,6 +58,14 @@ public class UpdateControllerutil extends Thread {
                         byMovieNameLike.getMc().setKycollectionm3u8(movie.getMc().getKycollectionm3u8());
                         byMovieNameLike.getMc().setKycollectionmp4(movie.getMc().getKycollectionmp4());
                     }
+                    if ("158".equals(flag)) {
+                        byMovieNameLike.getMc().setOne58collectionm3u8(movie.getMc().getOne58collectionm3u8());
+                        byMovieNameLike.getMc().setOne58collectionmp4(movie.getMc().getOne58collectionmp4());
+                    }
+                    if ("123".equals(flag)) {
+                        byMovieNameLike.getMc().setOne23collectionm3u8(movie.getMc().getOne23collectionm3u8());
+                        byMovieNameLike.getMc().setOne23collectionmp4(movie.getMc().getOne23collectionmp4());
+                    }
                     if ("zd".equals(flag)) {
                         byMovieNameLike.getMc().setZdcollectionm3u8(movie.getMc().getZdcollectionm3u8());
                         byMovieNameLike.getMc().setZdcollectionmp4(movie.getMc().getZdcollectionmp4());
@@ -67,10 +75,10 @@ public class UpdateControllerutil extends Thread {
                         byMovieNameLike.getMc().setOkcollectionmp4(movie.getMc().getOkcollectionmp4());
                     }
 
-                    movieESDao.save(byMovieNameLike);
+                    Movie save = movieESDao.save(byMovieNameLike);
                     LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变或该资源新添加）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
-                    System.err.println(sdf.format(System.currentTimeMillis()) +" " + byMovieNameLike.getMovieId() + " 更新:"+flag);
-                    return;
+                    System.err.println(sdf.format(System.currentTimeMillis()) +" "+
+                            Thread.currentThread().getName()+"："+" "+save.getMovieId() +" "+save.getMovieName());
                 }
             }
             System.err.println("未查找到电影");

@@ -4,13 +4,6 @@ package com.spider.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.TypeHandler;
-
-import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 
 /**
@@ -26,6 +19,10 @@ public class MovieCollection  {
     String kycollectionmp4 = "";
     String zdcollectionm3u8 = "";
     String zdcollectionmp4 = "";
+    String one58collectionm3u8 = "";
+    String one58collectionmp4 = "";
+    String one23collectionm3u8 = "";
+    String one23collectionmp4 = "";
     String okcollectionm3u8 = "";
     String okcollectionmp4 = "";
     String two09collectionm3u8 = "";

@@ -50,7 +50,7 @@ public class ZuiDaController {
     ZdMovieListProcessServiceImpl zd;
 
 
-    String baseurl = "http://www.zuidazy1.com";
+    String baseurl = "http://www.zuidazy2.com";
 
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -110,7 +110,7 @@ public class ZuiDaController {
                 }
                 downPageNum = 0;
                 break;
-            }
+            }else if (downPageNum > 10) break;
             if (downPageNum == 1) {
 //                    System.err.println("下载电影集合页面失败 " + downPageNum + " " + url);
                 LogUtil.fileWriter(file, "下载电影集合页面失败 " + downPageNum + " " + url);
@@ -141,7 +141,7 @@ public class ZuiDaController {
                     }
                     downPageNum = 0;
                     break;
-                }
+                }else if (downPageNum > 10) break;
                 if (downPageNum == 1) {
 //                        System.err.println("下载电影信息页面失败 " + downPageNum + " " + movieUrl);
                     LogUtil.fileWriter(file, "下载电影信息页面失败 " + downPageNum + " " + movieUrl);
@@ -227,11 +227,11 @@ public class ZuiDaController {
                 SaveControllerUtil saveControllerUtil =new SaveControllerUtil(movieESDao,movie,file);
                 saveControllerUtil.setName("最大");
                 saveControllerUtil.start();
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(2000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
 //                    System.err.println(sdf.format(System.currentTimeMillis()) + ":添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
 //                LogUtil.fileWriter(file, sdf.format(System.currentTimeMillis()) + ":添加电影id=" + movie.getMovieId() + "：" + movie.getMovieName());
 
@@ -245,11 +245,11 @@ public class ZuiDaController {
                     UpdateControllerutil controllerutil=new UpdateControllerutil(movieESDao,movie,file,name,"zd");
                     controllerutil.setName("zd");
                     controllerutil.start();
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        Thread.sleep(2000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
 //                        System.err.println(sdf.format(System.currentTimeMillis()) + ":更新电影（剧集改变）id=" + byMovieNameLike.getMovieId() + "：" + movie.getMovieName());
 
                 } else {
@@ -280,7 +280,9 @@ public class ZuiDaController {
         PageGetUtil commonPageGet = new CommonPageGet();
 
         /*酷云资源测试*/
-        String url = "http://www.zuidazy2.com/?m=vod-detail-id-78664.html";
+        String url = "http://158zyz.com/?m=vod-index-pg-1.html";
+//        String url = "http://158zyz.com/?m=vod-detail-id-22285.html";
+//        String url = "http://www.zuidazy2.com/?m=vod-detail-id-78664.html";
 //        String url = "http://www.zuidazy3.com/?m=vod-index-pg-888.html";
 
 
@@ -291,14 +293,14 @@ public class ZuiDaController {
 //        System.err.println(movieListProcessService.judgmentPageDownSuccess(page));
 
 //        System.err.println(movieListProcessService.processTotlePage(page,0));
-        System.err.println(movieListProcessService.processMovie(page));
+//        System.err.println(movieListProcessService.processMovie(page));
 //
 ////        System.err.println(page.getContent());
 ////
-//        List list = movieListProcessService.processMovieList(page);
-//        for (Object o : list) {
-//            System.err.println(o);
-//        }
+        List list = movieListProcessService.processMovieList(page);
+        for (Object o : list) {
+            System.err.println(o);
+        }
 
 
     }

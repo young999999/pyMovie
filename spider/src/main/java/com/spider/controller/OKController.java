@@ -30,7 +30,7 @@ import java.util.List;
  */
 @Data
 @RestController
-@Api(tags = "ok资源", description = "有关www.okzyw.com网站的爬取")
+//@Api(tags = "ok资源", description = "有关www.okzyw.com网站的爬取")
 @CrossOrigin
 public class OKController {
 

@@ -3,6 +3,7 @@ package test;
 
 import com.spider.entity.Movie;
 import com.spider.entity.Page;
+import com.spider.mapper.MovieESDao;
 import com.spider.mapper.MovieMapper;
 import com.spider.service.ProcessService;
 import com.spider.service.impl.KuYunMovieListProcessServiceImpl;
@@ -11,9 +12,10 @@ import com.spider.util.impl.KuYunPageGet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
+import java.util.Optional;
 
 
 /**
@@ -24,8 +26,26 @@ import javax.annotation.Resource;
 @SpringBootTest(classes = MybatisPlusTest.class)
 public class MybatisPlusTest {
 
-    @Resource
+    @Autowired
     MovieMapper movieMapper;
+    @Autowired
+    MovieESDao movieESDao;
+
+    @Test
+    public void test2() {
+        long start = System.currentTimeMillis();
+
+
+        for (int i = 0; i < Integer.MAX_VALUE; i++) {
+            Optional<Movie> byId = movieESDao.findById("1");
+            Movie movie = byId.get();
+            if (movie==null) break;
+
+        }
+        long end = System.currentTimeMillis();
+        System.err.println((end - start) / 1000.0);
+
+    }
 
 
     @Test
@@ -44,7 +64,7 @@ public class MybatisPlusTest {
 //        System.err.println(movieListProcessService.judgmentPageDownSuccess(page));
 //        System.err.println(movieListProcessService.processTotlePage(page));
         Movie movie = movieListProcessService.processMovie(page);
-        System.err.println(movie );
+        System.err.println(movie);
         movieMapper.insert(movie);
         System.err.println(movie);
     }

@@ -1,5 +1,5 @@
 server:
-  port: 8088
+  port: 8087
   max-http-header-size: 32KB
   tomcat:
     remote-ip-header: x-forward-for
@@ -84,9 +84,9 @@ spring:
 
   data:
     elasticsearch:
+      #      cluster-nodes: 47.98.53.232:9300 #5.6.8
       cluster-nodes: localhost:9300 #5.6.8
-#      cluster-nodes: 47.98.53.232:9300 #5.6.8
-#      cluster-nodes: 192.168.1.68:9300 #7.5.1
+#      cluster-nodes: 192.168.1.68:9300 #5.6.8
 #      cluster-name: my-application  #高版本加，如7.5.1；低版本不加，如5.6.8
 
 

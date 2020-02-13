@@ -27,10 +27,29 @@ public class MovieController {
 
     @GetMapping("movie/{name}")
     @ResponseBody
-    public List getMovie(@PathVariable(value = "name") String name){
+    public List getMovie(@PathVariable(value = "name") String name) {
         List<Movie> byMovieName = movieESDao.findByMovieName(name);
-
+        for (Movie movie : byMovieName) {
+            System.err.println(movie);
+        }
         return byMovieName;
+    }
+
+    @GetMapping("movie")
+    @ResponseBody
+    public int getMovie1() {
+        long start = System.currentTimeMillis();
+
+
+        Iterable<Movie> all = movieESDao.findAll();
+        int i=0;
+        for (Movie movie : all) {
+            i++;
+        }
+        long end = System.currentTimeMillis();
+        System.err.println((end - start) / 1000.0);
+        return i;
+
     }
 
     @GetMapping("movie/full/{name}")
@@ -56,7 +75,7 @@ public class MovieController {
     @GetMapping("movie1/{id}")
     @ResponseBody
     public Movie getMovie1(@PathVariable(value = "id") int id) {
-        Movie movie=new Movie();
+        Movie movie = new Movie();
 //        MovieCollection movieCollection=new MovieCollection("1","1","1","1","1","1","1","1");
 //        movie.setMovieId(id);
 //        movie.setMovieName("锦衣之下");
@@ -65,14 +84,15 @@ public class MovieController {
 //        movie.setMovieCategory("dd");
 //        movie.setMc(movieCollection);
 //        movieMapper.insert(movie);
-         movie = movieMapper.selectById(id);
+        movie = movieMapper.selectById(id);
         System.err.println(movie);
         return movie;
     }
+
     @GetMapping("rest")
-    public Movie restTest(){
-        RestTemplate restTemplate=new RestTemplate();
-        Movie movie=restTemplate.getForObject("http://localhost:8088/movie/full/锦衣之下",Movie.class);
+    public Movie restTest() {
+        RestTemplate restTemplate = new RestTemplate();
+        Movie movie = restTemplate.getForObject("http://localhost:8088/movie/full/锦衣之下", Movie.class);
         System.err.println(movie);
         return movie;
     }

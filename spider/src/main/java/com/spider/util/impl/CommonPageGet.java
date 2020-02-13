@@ -23,7 +23,7 @@ public class CommonPageGet implements PageGetUtil {
     public Page download(String url) {
         Page page=PageDownUtil.getPageContent(url);
         while ("".equals(page.getContent()) || 200 != page.getStatusCode()) {
-            page = KuYunPageDownUtil.getPageContent(url);
+            page = PageDownUtil.getPageContent(url);
             if ("".equals(page.getContent()) || 200 != page.getStatusCode()) {
                 System.err.println(sdf.format(System.currentTimeMillis())+" 下载出错，重新下载");
                 try {
