@@ -8,6 +8,22 @@
 		<button type="primary" @click="tologin">登录</button>
 		<button type="primary" @click="tovideo">video</button>
 
+		<view>最大</view>->
+		<video src="https://meng.wuyou-zuida.com/20191226/24682_ae7aa4b9/index.m3u8" controls></video>
+
+		
+		<view>123</view>->
+		<video src="https://www.gentaji.com/20200205/r58jthKe/index.m3u8" controls></video>
+		<br>
+		
+		<view>158</view>->
+		<video src="https://www.yxlmbbs.com:65/20200207/ftQDYs7o/index.m3u8" controls></video>
+		<br>
+		<view>mh</view>->
+		<video src="https://a.mhkuaibo.com/20200212/hSxuaIk9/index.m3u8" controls></video>
+		<br>
+		
+
 
 
 
@@ -40,7 +56,7 @@
 					url: "../../components/myvideo"
 				})
 			},
-			
+
 		}
 	}
 </script>
