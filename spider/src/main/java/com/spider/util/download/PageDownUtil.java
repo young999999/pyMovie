@@ -40,8 +40,8 @@ public class PageDownUtil {
 
 
         RequestConfig requestConfig = RequestConfig.custom()
-                .setConnectTimeout(10000)//创建连接最长时间
-                .setConnectionRequestTimeout(500)//获取连接最长时间
+                .setConnectTimeout(15000)//创建连接最长时间
+                .setConnectionRequestTimeout(5000)//获取连接最长时间
                 .setSocketTimeout(30000)//数据传输的最长时间
                 .build();
 
@@ -72,11 +72,11 @@ public class PageDownUtil {
             page.setStatusCode(statusCode);
             page.setContent(content);
         } catch (HttpHostConnectException e) {
-                System.err.println(sdf.format(System.currentTimeMillis()) + " socket连接错误："+e.getMessage());
+//                System.err.println(sdf.format(System.currentTimeMillis()) + " socket连接错误："+e.getMessage());
         } catch (ClientProtocolException e) {
-                System.err.println(sdf.format(System.currentTimeMillis()) + " 客户端协议异常"+e.getMessage());
+//                System.err.println(sdf.format(System.currentTimeMillis()) + " 客户端协议异常"+e.getMessage());
         } catch (IOException e) {
-                System.err.println(sdf.format(System.currentTimeMillis()) + " IO异常"+e.getMessage());
+//                System.err.println(sdf.format(System.currentTimeMillis()) + " IO异常"+e.getMessage());
         } finally {
             request.releaseConnection();
             try {

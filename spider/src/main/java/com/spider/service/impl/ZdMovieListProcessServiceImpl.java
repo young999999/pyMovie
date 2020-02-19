@@ -164,7 +164,7 @@ public class ZdMovieListProcessServiceImpl implements ProcessService {
 
             if (evaluateXPathMovieCategory.length > 0 && evaluateXPathMovieCategory != null) {
                 TagNode node = (TagNode) evaluateXPathMovieCategory[0];
-                movie.setMovieCategory(node.getText().toString());
+                movie.setMovieCategory(node.getText().toString().split(" ")[0]);
             }
 
         } catch (XPatherException e) {

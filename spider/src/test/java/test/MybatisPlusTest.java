@@ -1,6 +1,8 @@
 package test;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.spider.SpiderApplication;
 import com.spider.entity.Movie;
 import com.spider.entity.Page;
 import com.spider.mapper.MovieESDao;
@@ -11,40 +13,37 @@ import com.spider.util.PageGetUtil;
 import com.spider.util.impl.KuYunPageGet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Optional;
+import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
  * @author young
  * @create 2020-02-11 23:11
  */
-@RunWith(JUnit4.class)
-@SpringBootTest(classes = MybatisPlusTest.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = SpiderApplication.class)
 public class MybatisPlusTest {
 
-    @Autowired
+    @Resource
     MovieMapper movieMapper;
-    @Autowired
+    @Resource
     MovieESDao movieESDao;
 
     @Test
     public void test2() {
-        long start = System.currentTimeMillis();
 
-
-        for (int i = 0; i < Integer.MAX_VALUE; i++) {
-            Optional<Movie> byId = movieESDao.findById("1");
-            Movie movie = byId.get();
-            if (movie==null) break;
-
-        }
-        long end = System.currentTimeMillis();
-        System.err.println((end - start) / 1000.0);
-
+        QueryWrapper<Movie> wrapper = new QueryWrapper<>();
+        wrapper.eq("movieName", "锦衣之下");
+        Movie movie = movieMapper.selectOne(wrapper);
+        System.err.println(movie);
+//        List<List<Movie>> byMovieName = Collections.singletonList(movieMapper.selectList(wrapper));
+//        List<Movie> movies = byMovieName.get(0);
+//        System.err.println(movies);
     }
 
 
@@ -64,8 +63,8 @@ public class MybatisPlusTest {
 //        System.err.println(movieListProcessService.judgmentPageDownSuccess(page));
 //        System.err.println(movieListProcessService.processTotlePage(page));
         Movie movie = movieListProcessService.processMovie(page);
-        System.err.println(movie);
-        movieMapper.insert(movie);
-        System.err.println(movie);
+//        System.err.println(movie);
+//        movieMapper.insert(movie);
+//        System.err.println(movie);
     }
 }

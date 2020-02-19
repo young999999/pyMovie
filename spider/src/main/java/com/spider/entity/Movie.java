@@ -1,12 +1,8 @@
 package com.spider.entity;
 
-import com.alibaba.fastjson.support.config.FastJsonConfig;
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +12,8 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author young
@@ -24,7 +22,7 @@ import java.io.UnsupportedEncodingException;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor //生成无参的构造方法。
-@TableName(value = "movie",autoResultMap = true)
+@TableName(value = "movie", autoResultMap = true)
 
 @Document(indexName = "movie", type = "movie")
 public class Movie {
@@ -56,23 +54,22 @@ public class Movie {
 
     @TableField("poster")
     @Field(type = FieldType.Text)
-    private String poster;//更新状态
+    private String poster = "";//更新状态
 
 
     @TableField(typeHandler = JacksonTypeHandler.class)
 //    @TableField(typeHandler = FastjsonTypeHandler.class)
     @Field(type = FieldType.Object)
-    private MovieCollection mc=new MovieCollection();
-
-
-
+    private MovieCollection mc = new MovieCollection();
 
 
     public static void main(String[] args) throws UnsupportedEncodingException {
-
-
-        String s="";
-        System.err.println(s.split(",").length);
+        List list = new ArrayList();
+        boolean contains = list.contains(2);
+        System.err.println(contains);
+        list.add(1);
+        list.add("D");
+        System.err.println(list);
 
     }
 }

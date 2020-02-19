@@ -10,10 +10,13 @@ import java.util.List;
  * @author young
  * @create 2020-01-28 18:20
  */
-//@Repository
-public interface MovieESDao extends ElasticsearchRepository<Movie, String> {
+@Repository
+public interface MovieESDao extends ElasticsearchRepository<Movie, Long> {
     public List<Movie> findByMovieNameLike(String name);
     public List<Movie> findByMovieName(String name);
     public List<Movie> findByIdGreaterThan(int id);
+
+
+
 
 }

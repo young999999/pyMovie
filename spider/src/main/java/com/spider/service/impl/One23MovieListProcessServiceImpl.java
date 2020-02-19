@@ -156,7 +156,13 @@ public class One23MovieListProcessServiceImpl implements ProcessService {
             Object[] evaluateXPathActor = rootNoade.evaluateXPath("/body/div[4]/div[1]/div/div/div[2]/div[2]/ul/li[3]/span");
             if (evaluateXPathMovieName.length > 0 && evaluateXPathActor != null) {
                 TagNode node = (TagNode) evaluateXPathActor[0];
-                movie.setActor(node.getText().toString());
+                String actor = node.getText().toString();
+                String[] split = actor.split("&nbsp");
+                actor="";
+                for (int i = 0; i < split.length; i++) {
+                    actor += split[i];
+                }
+                movie.setActor(actor);
             }
 
             //电影类别/html/body/div[5]/div[1]/div/div/div[2]/div[2]/ul/li[4]/span
@@ -164,7 +170,7 @@ public class One23MovieListProcessServiceImpl implements ProcessService {
 
             if (evaluateXPathMovieCategory.length > 0 && evaluateXPathMovieCategory != null) {
                 TagNode node = (TagNode) evaluateXPathMovieCategory[0];
-                movie.setMovieCategory(node.getText().toString());
+                movie.setMovieCategory(node.getText().toString().split(" ")[0]);
             }
 
         } catch (XPatherException e) {

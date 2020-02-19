@@ -106,7 +106,7 @@ public class KuYunMovieListProcessServiceImpl implements ProcessService {
             Object[] evaluateXPathMovieCategory = rootNoade.evaluateXPath("/body/table[2]/tbody/tr[1]/td[2]/table/tbody/tr[5]/td/font");
             if (evaluateXPathMovieCategory.length > 0 && evaluateXPathMovieCategory != null) {
                 TagNode node = (TagNode) evaluateXPathMovieCategory[0];
-                movie.setMovieCategory(node.getText().toString());
+                movie.setMovieCategory(node.getText().toString().split(" ")[0]);
             }
 
 

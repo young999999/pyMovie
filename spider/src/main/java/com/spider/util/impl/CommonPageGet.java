@@ -25,7 +25,7 @@ public class CommonPageGet implements PageGetUtil {
         while ("".equals(page.getContent()) || 200 != page.getStatusCode()) {
             page = PageDownUtil.getPageContent(url);
             if ("".equals(page.getContent()) || 200 != page.getStatusCode()) {
-                System.err.println(sdf.format(System.currentTimeMillis())+" 下载出错，重新下载");
+//                System.err.println(sdf.format(System.currentTimeMillis())+" 下载出错，重新下载");
                 try {
                     TimeUnit.SECONDS.sleep(3);
                 } catch (InterruptedException e) {

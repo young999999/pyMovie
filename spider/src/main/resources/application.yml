@@ -20,7 +20,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     # 使用druid连接池
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://localhost:3306/movie?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://192.168.1.111:3306/movie?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     #    url: jdbc:mysql://192.168.1.68:3306/movie?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
     password: young19951006
@@ -84,12 +84,15 @@ spring:
 
   data:
     elasticsearch:
-      #      cluster-nodes: 47.98.53.232:9300 #5.6.8
-      cluster-nodes: localhost:9300 #5.6.8
-#      cluster-nodes: 192.168.1.68:9300 #5.6.8
-#      cluster-name: my-application  #高版本加，如7.5.1；低版本不加，如5.6.8
+      cluster-nodes: 47.98.53.232:7300 #5.6.8
+  #      cluster-nodes: 192.168.1.111:9300 #5.6.8
+  #      cluster-nodes: 192.168.1.68:9300 #5.6.8
+  #      cluster-name: my-application  #高版本加，如7.5.1；低版本不加，如5.6.8
 
-
+  mvc:
+    static-path-pattern: /**   #静态资源访问路径
+  resources:
+    static-locations: classpath:/static/,file:../static/
 
 mybatis-plus:
   global-config:
@@ -118,7 +121,7 @@ spring:
 
   data:
     elasticsearch:
-      cluster-nodes: 47.98.53.232:7300 #5.6.8
-      cluster-name:      #高版本加，如7.5.1；低版本不加，如5.6.8
+#      cluster-nodes: 47.98.53.232:7300 #5.6.8
+#      cluster-name:      #高版本加，如7.5.1；低版本不加，如5.6.8
 
 ---

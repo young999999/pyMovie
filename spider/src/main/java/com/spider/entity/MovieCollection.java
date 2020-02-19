@@ -23,6 +23,8 @@ public class MovieCollection  {
     String one58collectionmp4 = "";
     String one23collectionm3u8 = "";
     String one23collectionmp4 = "";
+    String bjcollectionm3u8 = "";
+    String bjcollectionmp4 = "";
     String okcollectionm3u8 = "";
     String okcollectionmp4 = "";
     String two09collectionm3u8 = "";

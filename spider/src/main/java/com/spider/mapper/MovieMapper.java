@@ -15,4 +15,7 @@ public interface MovieMapper extends BaseMapper<Movie> {
 //    @Select("select * from movie where movieName=#{name}")
     public Movie findByMovieName(String name);
 
+    void updateByMovieId(int id);
+
+
 }

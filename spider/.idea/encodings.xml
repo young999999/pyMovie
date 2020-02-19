@@ -3,6 +3,8 @@
   <component name="Encoding" defaultCharsetForPropertiesFiles="GBK">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/spider/util/impl/KuYunPageGet.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/1.txt" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
